@@ -1,0 +1,54 @@
+#+MACRO: PASSAGE PASSAGE
+
+#+TITLE: {{{PASSAGE}}}
+#+DATE: [2025-01-27 Lun]
+#+AUTHOR: chat-wane
+#+EMAIL: grumpy dot chat dot wane at gmail dot com
+
+#+OPTIONS: toc:nil
+#+OPTIONS: num:nil
+#+OPTIONS: prop:t
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/style.css" />
+#+HTML_HEAD: <script src="js/network.js" type="text/javascript"></script>
+#+HTML_HEAD: <script src="js/main.js" type="text/javascript"></script>
+
+
+
+* About
+
+/This website is under construction. Please be patient…/
+
+* Contribute
+
+** Support for Backends
+
+One major aspect of continuation queries concerns the support for
+databases. With our first release, we focused on [[https://blazegraph.com/][Blazegraph]]. Despite
+its terminated support, the *augmented* balanced tree representing the
+triple/quad data store allows {{{PASSAGE}}} to efficiently skip large part
+of triple/quad patterns, making simple subqueries with OFFSET clauses
+executable.
+
+# #+BEGIN_SRC sparql
+#  SELECT * WHERE { ?s ?p ?o }
+# #+END_SRC
+
+** SPARQL Operators
+
+** Smart Clients
+
+{{{PASSAGE}}} solely relies on the SPARQL standard to pause and resume a
+query execution until completion. While a SPARQL continuation query is
+sent back by the SPARQL endpoint, 
+
+
+* References
+
+** test
+:PROPERTIES:
+:UNTIL:    March 2021
+:FROM:     September 2019
+:END:
+
+woof
