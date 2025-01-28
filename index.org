@@ -1,25 +1,78 @@
 #+MACRO: PASSAGE PASSAGE
+#+MACRO: GITHUB @@html:<i class="fab fa-github" aria-hidden="true"></i>@@
+#+MACRO: GOOGLE @@html:<i class="fab fa-google" aria-hidden="true"></i>@@
 
 #+TITLE: {{{PASSAGE}}}
 #+DATE: [2025-01-27 Lun]
 #+AUTHOR: chat-wane
 #+EMAIL: grumpy dot chat dot wane at gmail dot com
 
+#+HTML_DOCTYPE: html5
+#+HTML_XML_DECL: none # this removes <?xml …> that prevents vite from serving
+
 #+OPTIONS: toc:nil
 #+OPTIONS: num:nil
 #+OPTIONS: prop:t
+#+OPTIONS: html-postamble:nil # removes the footer
 
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/style.css" />
 #+HTML_HEAD: <script src="js/network.js" type="text/javascript"></script>
 #+HTML_HEAD: <script src="js/main.js" type="text/javascript"></script>
+#+HTML_HEAD: <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
+
+
+#+BEGIN_CENTER
+*Ensuring Completeness and Responsiveness of Public SPARQL Endpoints*
+
+*with SPARQL Continuation Queries.*
+
+/This website is _under construction_. Please be patient…/
+#+END_CENTER
 
 
 
 * About
 
-/This website is under construction. Please be patient…/
+{{{PASSAGE}}} constitutes an effort towards the adoption of SPARQL
+query engines that provide complete and correct results! despite their
+timeout threshold on query execution time that enforce fair use
+policies…
+
+
+** Try it live!
+
+We pushed a live demonstration on [[https://live-demo-4455226726.europe-west2.run.app/][{{{GOOGLE}}} Google Cloud]].
+
+#+BEGIN_SRC
+  For the first run, the service might
+  take time to wake  up from idle mode;
+  so please be patient…
+#+END_SRC
+
+It serves a [[https://dsg.uwaterloo.ca/watdiv/][WatDiv10M dataset]] ingested using the standard [[https://blazegraph.com/][Blazegraph]]
+import procedure. We [[https://github.com/passage-org/passage-experiments-www-2025/blob/main/passage-comunica][added an actor]] to the smart client [[https://comunica.dev/][Comunica]] that
+divides query executions between the remote {{{PASSAGE}}} endpoint and
+the local web client Comunica.
+
+** How does it work?
+
+On public SPARQL endpoints, a SPARQL query cannot run for more than a
+predefined amount of time. When the query execution time reach this
+threshold, the query execution is stopped. The results are partial and
+a SPARQL continuation query is returned to provide the missing
+results.
+
+*** TODO provide a series of SPARQL execution as example.
+*** TODO provide an environment to display SPARQL queries.
+
+
 
 * Contribute
+
+The code base is available on the [[https://github.com/orgs/passage-org/repositories][{{{GITHUB}}} GitHub platform]]. Feel
+free to post issues, or to ask questions there. The reminder of this
+section provides details about possible contributions that would be
+greatly appreciated.
 
 ** Support for Backends
 
@@ -34,7 +87,25 @@ executable.
 #  SELECT * WHERE { ?s ?p ?o }
 # #+END_SRC
 
+*** TODO example of OFFSET query that runs well
+*** TODO note on the not mandatoriness of this skip
+
 ** SPARQL Operators
+
+For a start, we focused on a subset of SPARQL operators: core SPARQL
+[[[core-sparql][2]]]. It comprises triple patterns, basic graph patterns, joins,
+unions, filters, and optionals.
+
+*** TODO a table of supported operators with associated passage's version
+
+
+But the principle of continuation queries goes beyond these
+operators. For instance, we already know that a subset of aggregation
+queries allow continuation…
+
+*** TODO example of a continuation query using aggregates.
+
+
 
 ** Smart Clients
 
@@ -42,13 +113,15 @@ executable.
 query execution until completion. While a SPARQL continuation query is
 sent back by the SPARQL endpoint, 
 
+
 
 * References
 
-** test
-:PROPERTIES:
-:UNTIL:    March 2021
-:FROM:     September 2019
-:END:
+*** /Thomas Minier, Hala Skaf-Molli, and Pascal Molli/. [[https://dl.acm.org/doi/10.1145/3308558.3313652][SaGe: Web Preemption for Public SPARQL Query Services]]. 2019.
+<<sage>>
 
-woof
+*** /Jorge Pérez, Marcelo Arenas, and Claudio Gutiérrez/. [[https://dl.acm.org/doi/10.1145/1567274.1567278][Semantics and complexity of SPARQL]]. 2009.
+<<core-sparql>>
+
+*** /Ruben Taelman, Joachim Van Herwegen, Miel Vander Sande, and Ruben Verborgh/. [[https://dl.acm.org/doi/10.1007/978-3-030-00668-6_15][Comunica: A Modular SPARQL Query Engine for the Web]]. 2018.
+<<comunica>>
