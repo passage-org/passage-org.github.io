@@ -16,6 +16,7 @@
 #+OPTIONS: html-postamble:nil # removes the footer
 
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/style.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/code.css" />
 #+HTML_HEAD: <script src="js/network.js" type="text/javascript"></script>
 #+HTML_HEAD: <script src="js/main.js" type="text/javascript"></script>
 #+HTML_HEAD: <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
@@ -87,6 +88,21 @@ executable.
 
 #+BEGIN_SRC sparql
   SELECT * WHERE { ?s ?p ?o }
+#+END_SRC
+
+What happens ? 
+
+#+name: raw-dataset
+#+BEGIN_SRC sparql :url https://query.wikidata.org/sparql :format text/csv :cache yes :exports src
+SELECT ?wLabel ?pLabel
+WHERE
+{
+  ?p wdt:P31 wd:Q98270496 . #meow? 
+  ?p wdt:P1416 ?w .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" . }
+}
+ORDER BY ASC(?wLabel) ASC(?pLabel)
+LIMIT 10
 #+END_SRC
 
 
