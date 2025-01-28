@@ -1,12 +1,20 @@
 
 /* https://www.nordtheme.com/docs/colors-and-palettes */
-:root {
---nord0:  #2e3440; --nord1:  #3b4252; --nord2:  #434c5e; --nord3:  #4c566a; /* polar night */
---nord6:  #eceff4; --nord5:  #e5e9f0; --nord4:  #d8dee9; /* snow storm */
---nord7:  #8fbcbb; --nord8:  #88c0d0; --nord9:  #81a1c1; --nord10: #5e81ac; /* frost */
---nord11: #bf616a; --nord12: #d08770; --nord13: #ebcb8b; --nord14: #a3be8c; --nord15: #b48ead; /* aurora */
+:root {        
+    --nord0:  #2e3440; --nord1:  #3b4252; --nord2:  #434c5e; --nord3:  #4c566a; /* polar night */
+    --nord6:  #eceff4; --nord5:  #e5e9f0; --nord4:  #d8dee9; /* snow storm */
+    --nord7:  #8fbcbb; --nord8:  #88c0d0; --nord9:  #81a1c1; --nord10: #5e81ac; /* frost */
+    --nord11: #bf616a; --nord12: #d08770; --nord13: #ebcb8b; --nord14: #a3be8c; --nord15: #b48ead; /* aurora */
 
---left-margin: 58px; /*value left for the navigation bar*/
+    color-scheme: light dark; /* need this to be enabled */
+    --background-color: light-dark(white, var(--nord0));
+    --text-header-color: light-dark(var(--nord0), white);
+    --text-subheader-color: light-dark(var(--nord3), var(--nord6));
+    --text-color: light-dark(var(--nord3), var(--nord5));
+    --text-faded-color: light-dark(var(--nord5), var(--nord1));
+    
+    --left-margin: 58px; /*value left for the navigation bar*/
+    --right-comment-width: 200px;
 }
 
 
@@ -45,8 +53,8 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,
 }
 
 body {
-    background-color: white;
-    color: var(--nord3);
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-family: "Iosevka";
     counter-reset: section;
 }
@@ -82,19 +90,37 @@ a:visited {
     position: relative;
 }
 
-pre {
+
+
+.right-comment { position: relative; }
+
+.right-comment p {
     position: absolute;
-    left: calc(5px + 100%);
-    color: var(--nord4);
-    background-color: white;
+    width: var(--right-comment-width);
+    left: calc(5px + 100%); /* slightly lefter than main text */
+    color: var(--text-faded-color);
+    background-color: var(--background-color);
     border: none;
     box-shadow: none;
     /*bottom: calc(24px + 100%); /* 8+16 margin h2 + p */
-    bottom: 50%;
-    border-left: 1px dotted var(--nord3);
+    bottom: parent;
+    border-left: 1px dotted var(--text-color);
     padding-left: 8px;
-    transform: translateY(50%);
+    transform: translateY(-50%); /* center based on its content */
+    font-family: "Iosevka", monospace;
+    font-size: 13px;
 }
+
+.right-comment p:hover {
+    color: var(--text-color);
+}
+
+.src-sparql {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+
 
 nav {
     top: calc(-1*var(--left-margin));
@@ -102,7 +128,7 @@ nav {
     padding-bottom: 15px;
     padding-top: 15px;
     position: fixed;
-    background-color: white;
+    background-color: var(--background-color);
     transform-origin: bottom left;
     transform: rotate(90deg);
     font-family: "Courier New", Courier, monospace;
@@ -116,15 +142,15 @@ nav a {
     padding-right: 10px;
 }
 nav a:link {
-    color: var(--nord0);
+    color: var(--text-color);
     text-decoration: none;
 }
 nav a:visited {
-    color: var(--nord0);
+    color: var(--text-color);
     text-decoration: none;
 }
 nav a:hover {
-    color: var(--nord0);
+    color: var(--text-color);
     text-decoration: underline;
 }
 
@@ -132,7 +158,7 @@ nav a:hover {
     position:fixed;
     height:100%;
     width:1px;
-    background-color: var(--nord0);
+    background-color: var(--text-color);
     left: var(--left-margin);
     z-index: 1;
 }
@@ -140,7 +166,7 @@ nav a:hover {
 h2::before {
     content: "Section " counter(section, upper-roman);
     counter-increment: section;
-    color: var(--nord6);
+    color: var(--text-faded-color);
     margin-right: 8px;
     position: relative;
     float: right;
@@ -148,7 +174,7 @@ h2::before {
 }
 
 h1, h2 {
-    color: var(--nord0);
+    color: var(--text-header-color);
     padding-top: 64px;
     margin-bottom: 16px;
 }
@@ -162,7 +188,7 @@ h3::before {
     content: counter(section, upper-roman) "." counter(subsection);
     counter-increment: subsection;
     text-transform: uppercase;
-    color: var(--nord6);
+    color: var(--text-faded-color);
     margin-right: 8px;
     position: relative;
     float: right;
@@ -170,7 +196,7 @@ h3::before {
 }
 
 h3 {
-    color: var(--nord3);
+    color: var(--text-subheader-color);
     margin-top: 16px;
     margin-bottom: 16px;
 }

@@ -41,16 +41,18 @@ policies…
 
 ** Try it live!
 
+*** TODO unavailable for now: trial expired.
+
 We pushed a live demonstration on [[https://live-demo-4455226726.europe-west2.run.app/][{{{GOOGLE}}} Google Cloud]].
 
-#+BEGIN_SRC
-  For the first run, the service might
-  take time to wake  up from idle mode;
-  so please be patient…
-#+END_SRC
+#+BEGIN_right-comment
+For the first run, the service might
+take time to wake  up from idle mode;
+so please be patient…
+#+END_right-comment
 
 It serves a [[https://dsg.uwaterloo.ca/watdiv/][WatDiv10M dataset]] ingested using the standard [[https://blazegraph.com/][Blazegraph]]
-import procedure. We [[https://github.com/passage-org/passage-experiments-www-2025/blob/main/passage-comunica][added an actor]] to the smart client [[https://comunica.dev/][Comunica]] that
+import procedure. We [[https://github.com/passage-org/passage-comunica][added an actor]] to the smart client [[https://comunica.dev/][Comunica]] that
 divides query executions between the remote {{{PASSAGE}}} endpoint and
 the local web client Comunica.
 
@@ -80,24 +82,24 @@ One major aspect of continuation queries concerns the support for
 databases. With our first release, we focused on [[https://blazegraph.com/][Blazegraph]]. Despite
 its terminated support, the *augmented* balanced tree representing the
 triple/quad data store allows {{{PASSAGE}}} to efficiently skip large part
-of triple/quad patterns, making simple subqueries with OFFSET clauses
+of triple/quad patterns, making simple subqueries with =OFFSET= clauses
 executable.
 
-# #+BEGIN_SRC sparql
-#  SELECT * WHERE { ?s ?p ?o }
-# #+END_SRC
+#+BEGIN_SRC sparql
+  SELECT * WHERE { ?s ?p ?o }
+#+END_SRC
 
-*** TODO example of OFFSET query that runs well
+
+*** TODO example of ~OFFSET~ query that runs well
 *** TODO note on the not mandatoriness of this skip
 
 ** SPARQL Operators
 
 For a start, we focused on a subset of SPARQL operators: core SPARQL
-[[[core-sparql][2]]]. It comprises triple patterns, basic graph patterns, joins,
-unions, filters, and optionals.
+[[core-sparql][[3]]]. It comprises triple patterns, basic graph
+patterns, joins, unions, filters, and optionals.
 
 *** TODO a table of supported operators with associated passage's version
-
 
 But the principle of continuation queries goes beyond these
 operators. For instance, we already know that a subset of aggregation
@@ -106,22 +108,47 @@ queries allow continuation…
 *** TODO example of a continuation query using aggregates.
 
 
-
 ** Smart Clients
 
-{{{PASSAGE}}} solely relies on the SPARQL standard to pause and resume a
-query execution until completion. While a SPARQL continuation query is
-sent back by the SPARQL endpoint, 
+{{{PASSAGE}}} solely relies on the SPARQL standard to pause and resume
+a query execution until completion. When a SPARQL continuation query
+is sent back by the SPARQL endpoint, the requester is in charge of
+returning it back to the endpoint, to get complete results.
+
+*** TODO example using ~curl~.
+
+It remains tedious… Instead, we [[https://github.com/passage-org/passage-comunica][added an actor]] to the smart client
+[[https://comunica.dev/][Comunica]]. With a few lines of code, this web client is able to
+decompose the query to run locally the operators that the remote
+endpoint cannot handle.
+
+*** TODO example of decomposed plan.
+
+Contributions in this area are twofolds:
+
++ Keep the smart client up-to-date with Comunica. /For instance, the
+  current implementation sets the subset of operations handled by
+  {{{PASSAGE}}}. Instead, the server should advertise it./
+
+
++ Implement the same logic in other smart client. /While Comunica
+  provides a convenient browser experience, it lacks some
+  multithreading capabilities. Other engines such as [[https://github.com/LiUSemWeb/HeFQUIN][HeFQUIN]] could
+  fill this gap./
+
 
 
 
 * References
 
-*** /Thomas Minier, Hala Skaf-Molli, and Pascal Molli/. [[https://dl.acm.org/doi/10.1145/3308558.3313652][SaGe: Web Preemption for Public SPARQL Query Services]]. 2019.
+**** TODO [1] /Thi Hoang Thi Pham, Gabriela Montoya, Brice Nédelec, Hala Skaf-Molli, and Pascal Molli/. _PASSAGE: Ensuring Completeness and Responsiveness of Public SPARQL Endpoints with SPARQL Continuation Queries_. 2025.
+<<passage>>
+
+**** [2] /Thomas Minier, Hala Skaf-Molli, and Pascal Molli/. [[https://dl.acm.org/doi/10.1145/3308558.3313652][SaGe: Web Preemption for Public SPARQL Query Services]]. 2019.
 <<sage>>
 
-*** /Jorge Pérez, Marcelo Arenas, and Claudio Gutiérrez/. [[https://dl.acm.org/doi/10.1145/1567274.1567278][Semantics and complexity of SPARQL]]. 2009.
+**** [3] /Jorge Pérez, Marcelo Arenas, and Claudio Gutiérrez/. [[https://dl.acm.org/doi/10.1145/1567274.1567278][Semantics and complexity of SPARQL]]. 2009.
 <<core-sparql>>
 
-*** /Ruben Taelman, Joachim Van Herwegen, Miel Vander Sande, and Ruben Verborgh/. [[https://dl.acm.org/doi/10.1007/978-3-030-00668-6_15][Comunica: A Modular SPARQL Query Engine for the Web]]. 2018.
+**** [4] /Ruben Taelman, Joachim Van Herwegen, Miel Vander Sande, and Ruben Verborgh/. [[https://dl.acm.org/doi/10.1007/978-3-030-00668-6_15][Comunica: A Modular SPARQL Query Engine for the Web]]. 2018.
 <<comunica>>

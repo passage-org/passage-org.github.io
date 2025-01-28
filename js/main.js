@@ -9,7 +9,6 @@ let net = new Network(Math.round(window.innerWidth/10),
 
 function init () {
     createNav();
-    highlightPre();
     createArt();
 }
 
@@ -44,7 +43,7 @@ function createArt() {
 	circle.setAttribute("cx", node.x);
 	circle.setAttribute("cy", node.y);
 	circle.setAttribute("r",  3);
-	circle.setAttribute("fill", "var(--nord4)");
+	circle.setAttribute("fill", "var(--text-faded-color)");
 	circle.setAttribute("id", node.id);
 	art.append(circle);
     })
@@ -67,11 +66,11 @@ function createArt() {
 	    if (!artLink) {
 		artLink = document.createElementNS(addr, "line");
 		artLink.setAttribute("id", link);
-		artLink.setAttribute("stroke", "var(--nord4)") // flashing a bit
+		artLink.setAttribute("stroke", "var(--text-faded-color)") // flashing a bit
 		art.prepend(artLink);
 		artLink = art.getElementById(link);
 	    } else {
-		artLink.setAttribute("stroke", "var(--nord6)")
+		artLink.setAttribute("stroke", "var(--text-faded-color)")
 	    }
 	    
 	    
@@ -94,21 +93,6 @@ function createArt() {
 	});
 	
     }, 50);
-}
-		 
-
-
-
-/**
- * Depending on screen, might be too light, onmouseover highlight
- * the text within.
- */
-function highlightPre() {
-    let pres = document.getElementsByTagName("pre");
-    for (let i = 0; i < pres.length; ++i) {
-	pres[i].onmouseover = () => pres[i].style.color = "var(--nord3)";	
-	pres[i].onmouseout  = () => pres[i].style.color = "var(--nord4)";
-    }
 }
 
 
