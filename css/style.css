@@ -14,7 +14,7 @@
     --text-faded-color: light-dark(var(--nord5), var(--nord1));
     
     --left-margin: 58px; /*value left for the navigation bar*/
-    --right-comment-width: 200px;
+    --comment-width: 200px;
 }
 
 
@@ -96,7 +96,7 @@ a:visited {
 
 .right-comment p {
     position: absolute;
-    width: var(--right-comment-width);
+    width: var(--comment-width);
     left: calc(5px + 100%); /* slightly lefter than main text */
     color: var(--text-faded-color);
     background-color: var(--background-color);
@@ -112,6 +112,29 @@ a:visited {
 }
 
 .right-comment p:hover {
+    color: var(--text-color);
+}
+
+.left-comment { position: relative; }
+
+.left-comment p {
+    position: absolute;
+    width: var(--comment-width);
+    left: calc(-1 * var(--comment-width) - 23px); /* same than right-comment but left */
+    color: var(--text-faded-color);
+    background-color: var(--background-color);
+    border: none;
+    box-shadow: none;
+    bottom: parent;
+    border-right: 1px dotted var(--text-color);
+    padding-right: 8px;
+    transform: translateY(-50%); /* center based on its content */
+    font-family: "Iosevka", monospace;
+    font-size: 13px;
+    text-align: end;
+}
+
+.left-comment p:hover {
     color: var(--text-color);
 }
 

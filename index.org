@@ -81,19 +81,36 @@ greatly appreciated.
 
 One major aspect of continuation queries concerns the support for
 databases. With our first release, we focused on [[https://blazegraph.com/][Blazegraph]]. Despite
-its terminated support, the *augmented* balanced tree representing the
+its terminated support, the *augmented* balanced trees representing the
 triple/quad data store allows {{{PASSAGE}}} to efficiently skip large part
 of triple/quad patterns, making simple subqueries with =OFFSET= clauses
 executable.
 
-#+BEGIN_SRC sparql
-  SELECT * WHERE { ?s ?p ?o }
+#+BEGIN_SRC sparql :url https://query.wikidata.org/sparql :format text/csv :cache yes :exports code
+  SELECT * WHERE {         # A SELECT query or sub-query
+    BIND (rdf:type AS ?p)  # Var(s) assignment(s)
+    ?s ?p ?o               # One triple/quad pattern only
+  } OFFSET 18000000        # May need to skip a lot of elements
 #+END_SRC
 
-What happens ? 
+# The underlying indexes of Blazegraph allows getting the key at inde
 
-#+name: raw-dataset
-#+BEGIN_SRC sparql :url https://query.wikidata.org/sparql :format text/csv :cache yes :exports src
+On such a query, Blazegraph uses an index where =?p= is bounded first
+=POS=. Thus, retrieving all =?o= and =?s= for such a =?p= remains
+efficient. The results are produced in a deterministic order.  The
+=OFFSET= states that the first 18000000 results should be
+ignored. Instead of exploring these results then dropping them,
+{{{PASSAGE}}} uses the index to retrieve the key at targeted offset,
+and starts the range query there.
+#+BEGIN_right-comment
+The time complexity to create these iterators for range queries is
+logarithmic compared to the number of elements matching the pattern.
+#+END_right-comment
+
+By using such sub-queries as basis, {{{PASSAGE}}} is able to pause and
+resume the query execution of more complex SPARQL queries. 
+
+#+BEGIN_SRC sparql :url https://query.wikidata.org/sparql :format text/csv :cache yes :exports code
 SELECT ?wLabel ?pLabel
 WHERE
 {
