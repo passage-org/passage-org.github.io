@@ -1,11 +1,16 @@
 /* org-mode generates the css inside the source blocks
    therefore we must provide them a style. Nothing fancy though. */
 
+.src {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
 .org-keyword {
     color: var(--nord8);
 }
 
-.org-variable-name {
+.org-type, .org-variable-name {
     color: var(--nord11);
 }
 
