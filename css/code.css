@@ -4,6 +4,8 @@
 .src {
     background-color: var(--background-color);
     color: var(--text-color);
+    font-family: var(--code-font-name);
+    font-size:   var(--code-font-size);
 }
 
 .org-keyword {

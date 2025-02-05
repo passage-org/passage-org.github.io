@@ -15,12 +15,12 @@
 #+OPTIONS: prop:t
 #+OPTIONS: html-postamble:nil # removes the footer
 
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/font.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/style.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/code.css" />
 #+HTML_HEAD: <script src="js/network.js" type="text/javascript"></script>
 #+HTML_HEAD: <script src="js/main.js" type="text/javascript"></script>
 #+HTML_HEAD: <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
-
 
 #+BEGIN_CENTER
 *Ensuring Completeness and Responsiveness of Public SPARQL Endpoints*
@@ -141,6 +141,36 @@ For a start, we focused on a subset of SPARQL operators: core SPARQL
 patterns, joins, unions, filters, and optionals.
 
 *** TODO a table of supported operators with associated passage's version
+
+#+NAME: meow
+#+BEGIN_SRC shell :results output :exports none :eval yes
+echo "\
+  Operator,     Support,    Comment
+  tp/qp   ,     =0.0.1=,
+  Join    ,     =0.0.1=,
+  BGP     ,     =0.0.1=,    BGPs are transformed in a series of joined tp/qp.
+  Union   ,     =0.0.1=,
+  Values  ,     =0.0.1=,
+  Filter  ,     =0.0.1=, "
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :var data=meow :results raw :exports results :eval yes
+  (with-temp-buffer
+    (insert data)
+    (org-table-convert-region (point-min) (point-max) ",")
+    (buffer-string))
+#+END_SRC
+
+#+RESULTS:
+| Operator | Support | Comment                                           |
+| tp/qp    | =0.0.1= |                                                   |
+| Join     | =0.0.1= |                                                   |
+| BGP      | =0.0.1= | BGPs are transformed in a series of joined tp/qp. |
+| Union    | =0.0.1= |                                                   |
+| Values   | =0.0.1= |                                                   |
+| Filter   | =0.0.1= |                                                   |
+
+
 
 But the principle of continuation queries goes beyond these
 operators. For instance, we already know that a subset of aggregation

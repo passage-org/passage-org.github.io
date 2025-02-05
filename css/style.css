@@ -15,27 +15,14 @@
     
     --left-margin: 58px; /*value left for the navigation bar*/
     --comment-width: 200px;
+    --font-name: "Roboto";
+    --font-size: large;
+    --code-font-name: "Courier New";
+    --code-font-size: medium;
 }
 
 
 
-@font-face {
-    font-family: "Iosevka";
-    src: url("iosevka-regular.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "Iosevka";
-    src: url("iosevka-bold.woff2") format("woff2");
-    font-weight: bold;
-}
-
-@font-face {
-    font-family: "Iosevka";
-    src: url("iosevka-italic.woff2") format("woff2");
-    font-style: italic;
-}
-    
 
 
 #art {
@@ -55,7 +42,8 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,
 body {
     background-color: var(--background-color);
     color: var(--text-color);
-    font-family: "Iosevka";
+    font-family: var(--font-name);
+    font-size: var(--font-size);
     counter-reset: section;
 }
 
@@ -107,8 +95,8 @@ a:visited {
     border-left: 1px dotted var(--text-color);
     padding-left: 8px;
     transform: translateY(-50%); /* center based on its content */
-    font-family: "Iosevka", monospace;
-    font-size: 13px;
+    font-family: var(--font-name), monospace;
+    font-size: smaller;
 }
 
 .right-comment p:hover {
@@ -129,8 +117,8 @@ a:visited {
     border-right: 1px dotted var(--text-color);
     padding-right: 8px;
     transform: translateY(-50%); /* center based on its content */
-    font-family: "Iosevka", monospace;
-    font-size: 13px;
+    font-family: var(--font-name), monospace;
+    font-size: smaller;
     text-align: end;
 }
 
@@ -149,7 +137,7 @@ nav {
     background-color: var(--background-color);
     transform-origin: bottom left;
     transform: rotate(90deg);
-    font-family: "Courier New", Courier, monospace;
+    font-family: var(--code-font-name), Courier, monospace;
     font-size: 20px;
     z-index: 1;
     overflow-wrap: break-word;
