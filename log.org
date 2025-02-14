@@ -1,0 +1,115 @@
+* Live Wikidata project
+
+** Useful links
+
+- https://addshore.com/2019/10/your-own-wikidata-query-service-with-no-limits/
+- https://www.mediawiki.org/wiki/Wikidata_Query_Service/Implementation/Standalone
+- https://github.com/wmde/wikibase-release-pipeline
+- https://github.com/wikimedia/wikidata-query-rdf
+
+** Running the server
+
+We `scp` the passage-server with dependencies to the remote machine.
+By setting the port to 80 or 443, we get `java.net.BindException: Permission denied`.
+
+#+BEGIN_SRC bash
+java -jar passage-server.jar -d /DATA/datasets/watdiv10m-blaze/watdiv10M.jnl --port 443 --timeout=1000
+#+END_SRC
+
+Need to be super-user to do so on this port. On port 80, since the
+nginx presumably redirects it from 443 to 80.
+
+#+BEGIN_SRC bash
+sudo java -jar passage-server.jar -d /DATA/datasets/watdiv10m-blaze/watdiv10M.jnl --port 80 --timeout=1000
+#+END_SRC
+
+#+BEGIN_SRC bash
+curl -v -X GET --http1.1 -G --data-urlencode "query=SELECT * WHERE {?s ?p ?o} LIMIT 10" "https://10-54-2-226.gcp.glicid.fr/watdiv10M.jnl/passage"
+#+END_SRC
+
+** Downloading the wikidata data 
+
+#+BEGIN_SRC bash
+axel -a -n 10 http://dumps.wikimedia.your.org/wikidatawiki/entities/latest-all.ttl.gz --verbose
+# Downloaded 109.696 Gigabyte(s) in 1:57:53 hour(s). (16261.77 KB/s)
+#+END_SRC
+
+** Ingesting the wikidata data
+
+Had trouble compiling the tools provided by Wikimedia. Lombok not
+properly generating constructors. Finally, it worked inside the
+Intellij IDE.
+
+Update: it didn't. I had issue with scala compiler then… So I got
+=munge.sh= from the release on github, that I modified to use the
+built jar with dependencies of Wikidata available at:
+https://archiva.wikimedia.org/repository/releases/org/wikidata/query/rdf/tools/0.3.154
+
+This produces a large number of archives files formated as:
+=wikidump-000000001.ttl.gz=.
+
+** Ingesting the data
+
+While Wikidata's website recommends to start a server, we will try
+using our old fashioned way, with the bulk loader command:
+https://github.com/blazegraph/database/wiki/Bulk_Data_load. For
+example:
+
+#+BEGIN_SRC bash
+  java -cp blazegraph.jar com.bigdata.rdf.store.DataLoader Affymetrix.properties -addDefaultGraph "http://example.org/Affymetrix" /GDD/datasets/blaze/largerdfbench-blaze/nt/Affymetrix.nt
+#+END_SRC
+
+We need a property file defining the database. On GitHub, we retrieve
+the released one called =RWStore.properties=. In this file, Wikimedia
+defines its own vocabulary that is not defined in the released old
+=blazegraph.jar=. So we built a shaded (because we need to call
+=DataLoader=) blazegraph from Wikimedia with an added dependency to
+=log4j 1.2.17= which old =DataLoader= depends on. Calling the shaded
+blazegraph jar now works properly.
+
+Performing some checks to plan the ingestion, i.e., should we start
+ingesting before munging is complete? Ingesting the folder of 2 files:
+=wikidump-000000001.ttl.gz=, and =wikidump-000000002.ttl.gz= we obtain
+a file of 3.5GB with:
+#+BEGIN_EXAMPLE
+Load: 36896928 stmts added in 163.714 secs, rate= 225374, commitLatency=0ms, {failSet=0,goodSet=2}
+Total elapsed=176712ms
+#+END_EXAMPLE
+
+By ingesting the two files sequentially, we obtain a 4.1GB journal file with:
+#+BEGIN_EXAMPLE
+Load: 21719362 stmts added in 77.633 secs, rate= 279769, commitLatency=0ms, {failSet=0,goodSet=1}
+Total elapsed=84796ms
+Load: 15177566 stmts added in 87.956 secs, rate= 172558, commitLatency=0ms, {failSet=0,goodSet=1}
+Total elapsed=98211ms
+#+END_EXAMPLE
+
+The number of statements is consistent. The ingestion times are
+roughly similar. The generated file size seems better with the
+folder.
+
+Then, by reingesting the same files, no statements are added to the
+database, as expected. However, it still prints the statements as
+being ingested, and it still took (half the original) time to check
+every statement. With =-Xmx32g= instead of nothing, it takes the same
+amount of time (which is roughly 130s).
+
+There are 370 files for 20/100Gb munged. So we can expected 1700
+files. If the ingestion rate remains the same, we can expect 130s*1700/3600=61h
+
+Ingesting the first 350 files started at [2025-02-13 Thu] 17:30 UTC+1.
+
+Munging stopped at roughly 4:30, totaling 2044 files, for 103GB.
+
+At 9:44, only 228 files have been ingested, representing 1.660.210.886
+statements. The size of the journal is 154GB.
+
+On a side note:
+- The ingestion of each file often starts with multithreading, but
+  slows down over time until one thread remains for
+  a long time.
+- The CPU is not well exploited, perhaps launching
+  Blazegraph as a server would allow for better parallelism.
+- The RAM does not seem to be used extensively. It remains around a
+  7GB usage.
+
