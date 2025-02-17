@@ -1,0 +1,294 @@
+#+MACRO: PASSAGE PASSAGE
+
+#+TITLE: {{{PASSAGE}}}
+#+DATE: [2025-02-11 Lun]
+#+AUTHOR: chat-wane
+#+EMAIL: grumpy dot chat dot wane at gmail dot com
+
+#+HTML_DOCTYPE: html5
+#+HTML_XML_DECL: none # this removes <?xml …> that prevents vite from serving
+
+#+OPTIONS: toc:nil
+#+OPTIONS: num:nil
+#+OPTIONS: prop:t
+#+OPTIONS: html-postamble:nil # removes the footer
+
+#+OPTIONS: html-inline-images:t html-image-inline:t
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/font.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/style.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/code.css" />
+#+HTML_HEAD: <script src="../js/network.js" type="text/javascript"></script>
+#+HTML_HEAD: <script src="../js/main.js" type="text/javascript"></script>
+#+HTML_HEAD: <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
+
+#+BEGIN_CENTER
+*¡Live Wikidata!*
+
+*Correct and Complete Results for Everyone*
+#+END_CENTER
+
+
+
+Wikidata is a notorious knowledge graph available for everyone. It
+stores tens of billions of statements, directly accessible using
+SPARQL queries through the web. However, to enforce its fair use
+policies, Wikidata sets a 60-seconds timeout on query execution. Once
+this threshold is reached, the query execution is aborted, providing
+no results to its end-user. 
+
+To alleviate this issue, end-users must either manipulate the query to
+make it more efficient; or download the dump themselves to run it
+without limitations.
+
+We argue that end-users can get complete and correct results if SPARQL
+query engines enable continuation queries, i.e., queries that allow
+retrieving the missing results when the computation is stopped before
+completion.
+
+* Downloading
+
+The first step to create a live Wikidata SPARQL endpoint is to
+retrieve the data. Since {{{PASSAGE}}} supports Blazegraph, which is
+the engine and data structure that Wikidata relies on, retrieving the
+=.jnl= file would suffice. However, these files are huge and not
+publicly available, so we download their dump instead:
+#+BEGIN_right-comment
+While creating our first journal file is time consumming, later
+replication will be easier.
+#+END_right-comment
+#+BEGIN_left-comment
+We use =axel= to speed up the download, and provide error management.
+#+END_left-comment
+
+#+BEGIN_SRC bash :eval no
+  axel -a -n 10 --verbose \
+       http://dumps.wikimedia.your.org/wikidatawiki/entities/latest-all.ttl.gz
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+Downloaded 109.696 Gigabyte(s) in 1:57:53 hour(s). (16261.77 KB/s)
+#+END_EXAMPLE
+
+
+* Ingesting
+
+Once the compressed turtle file containing all Wikidata's data is
+downloaded, we must ingest it into our database, which is Blazegraph,
+as we want to remain close to the original endpoints.
+
+
+** Issues
+
+Despite being impressive in many aspects, Blazegraph's official
+support has been abandonned years ago. Wikimedia had to manage their
+own version of Blazegraph.
+#+BEGIN_right-comment
+Until the team finds a suitable replacement to Blazegraph, that is.
+#+END_right-comment
+
+To remain the closest to Wikipedia's database, we use their provided
+tools to ingest the data. We favor an approach based on the
+[[https://github.com/blazegraph/database/wiki/Bulk_Data_load][CLI]]. Although it cannot benefit from the ingestion of multiple files
+at a time, it is easily monitorable, and feels more reliable.
+#+BEGIN_left-comment
+Only one process has locked read/write access to the =.jnl= file.
+#+END_left-comment
+
+However, we had trouble compiling the tools: Lombok was not properly
+generating constructors; and the Scala compiler dependency threw
+unintelligible errors. So instead, we used [[https://archiva.wikimedia.org/repository/releases/org/wikidata/query/rdf/tools/0.3.154][=munge.sh=]] provided online;
+and restricted our goal to create a self-contained =blazegraph.jar=
+that contains Wikidata's home-made vocabulary.
+- We added a shade target so =DataLoader= is part of the exported jar;
+- We added the dependency to =log4j 1.2.17= which the old =DataLoader= depends on.
+
+** Comments
+
+Wikimedia recommends to =munge.sh= the compressed turtle file. From the
+original file, it creates a large number of compressed turtle files:
+#+BEGIN_right-comment
+The original file still exists. So if you fall short of 100GB,
+remember to clean it.
+#+END_right-comment
+#+BEGIN_SRC bash
+  ./munge.sh -c 50000 \
+             -f /DATA/datasets/latest-all.ttl.gz \
+             -d /DATA/datasets/wikidata-munged/
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+…
+04:22:45.108 … - Processed 102100000 entities at (2899, 2652, 2354)
+04:22:45.108 … - Switching to /DATA/datasets/wikidata-munged//wikidump-000002043.ttl.gz
+04:22:47.697 … - Processed 102110000 entities at (2979, 2672, 2363)
+04:22:50.619 … - Processed 102120000 entities at (2979, 2672, 2363)
+04:22:54.360 … - Processed 102130000 entities at (3022, 2686, 2369)
+04:22:57.630 … - Processed 102140000 entities at (2989, 2685, 2371)
+04:23:00.375 … - Processed 102150000 entities at (2989, 2685, 2371)
+04:23:00.376 … - Switching to /DATA/datasets/wikidata-munged//wikidump-000002044.ttl.gz
+04:23:02.485 … - Processed 102160000 entities at (3036, 2700, 2377)
+#+END_EXAMPLE
+
+It creates 2044 files formated as =wikidump-000000001.ttl.gz=. To plan
+the ingestion of all these files, we checked the idempotency of the
+operation, i.e., ingesting a statement multiple times has no more
+effect that ingesting it once. Thus, the ingestion can be paused and
+resumed easily, if needed.
+
+
+#+BEGIN_COMMENT
+Finally, we need a property file defining the database. On GitHub, we
+retrieve the released one called =RWStore.properties=. In this file,
+Wikimedia defines its own vocabulary that is not defined in the
+released old =blazegraph.jar=. So we built a shaded (because we need
+to call =DataLoader=) blazegraph from Wikimedia with an added
+dependency to =log4j 1.2.17= which old =DataLoader= depends
+on. Calling the shaded blazegraph jar now works properly.
+
+Performing some checks to plan the ingestion, i.e., should we start
+ingesting before munging is complete? Ingesting the folder of 2 files:
+=wikidump-000000001.ttl.gz=, and =wikidump-000000002.ttl.gz= we obtain
+a file of 3.5GB with:
+#+BEGIN_EXAMPLE
+Load: 36896928 stmts added in 163.714 secs, rate= 225374, commitLatency=0ms, {failSet=0,goodSet=2}
+Total elapsed=176712ms
+#+END_EXAMPLE
+
+By ingesting the two files sequentially, we obtain a 4.1GB journal file with:
+#+BEGIN_EXAMPLE
+Load: 21719362 stmts added in 77.633 secs, rate= 279769, commitLatency=0ms, {failSet=0,goodSet=1}
+Total elapsed=84796ms
+Load: 15177566 stmts added in 87.956 secs, rate= 172558, commitLatency=0ms, {failSet=0,goodSet=1}
+Total elapsed=98211ms
+#+END_EXAMPLE
+
+The number of statements is consistent. The ingestion times are
+roughly similar. The generated file size seems better with the
+folder.
+
+Then, by reingesting the same files, no statements are added to the
+database, as expected. However, it still prints the statements as
+being ingested, and it still took (half the original) time to check
+every statement. With =-Xmx32g= instead of nothing, it takes the same
+amount of time (which is roughly 130s).
+#+END_COMMENT
+
+** Timelapse
+
+Finally, we can start the sequential ingestion of the 100GB of
+downloaded data. The following scripts run the ingester for each file
+in the targeted =$SOURCE_FOLDER=. =FROM_FILE= and =TO_FILE= allow
+resuming the ingestion if needed. [[https://github.com/wikimedia/wikidata-query-rdf/archive/refs/tags/query-service-parent-0.3.154.zip][=RWStore.properties=]] is the property
+file defining Blazegraph's engine and storage. To keep the log of the
+operation, we redirect every output towards =ingestion_log.dat=. We
+allocate =-Xmx32G= of memory to the JVM, although it does not seem to
+require more than 10GB.
+
+#+BEGIN_SRC bash
+  SOURCE_FOLDER="/DATA/datasets/wikidata-munged"
+  FROM_FILE="/DATA/datasets/wikidata-munged/wikidump-000000257.ttl.gz" # included
+  TO_FILE="/DATA/datasets/wikidata-munged/wikidump-000003000.ttl.gz" # excluded
+
+  for file in "$SOURCE_FOLDER"/*.ttl.gz; do
+      if ([[ "$file" > "$FROM_FILE" ]] || [[ "$file" == "$FROM_FILE" ]]) && [[ "$file" < "$TO_FILE" ]]; then
+  	java -Xmx32g -cp blazegraph-0.3.154-shaded.jar com.bigdata.rdf.store.DataLoader RWStore.properties "$file" &>> ingestion_log.dat
+      fi
+  done
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+…
+Will load from: /DATA/datasets/wikidata-munged/wikidump-000000589.ttl.gz
+Journal file: wikidata.jnl
+loading: 15264095 stmts added in 1745.302 secs, rate= 8745, commitLatency=0ms, {failSet=0,goodSet=0}
+Load: 15264095 stmts added in 1745.302 secs, rate= 8745, commitLatency=0ms, {failSet=0,goodSet=1}
+Total elapsed=1800641ms
+…
+#+END_EXAMPLE
+
+There are 370 files for 20/100Gb munged. So we can expected 1700
+files. If the ingestion rate remains the same, we can expect 130s*1700/3600=61h
+
+Ingesting the first 350 files started at [2025-02-13 Thu] 17:30 UTC+1.
+
+Munging stopped at roughly 4:30, totaling 2044 files, for 103GB.
+
+At 9:44, only 228 files have been ingested, representing 1.660.210.886
+statements. The size of the journal is 154GB.
+
+On a side note:
+- The ingestion of each file often starts with multithreading, but
+  slows down over time until one thread remains for
+  a long time.
+- The CPU is not well exploited, perhaps launching
+  Blazegraph as a server would allow for better parallelism.
+- The RAM does not seem to be used extensively. It remains around a
+  7GB usage.
+
+At 11:25 on monday, 571 files have been ingested, representing
+3.950.871.981 statements. The size of the journal is 345GB.
+
+#+BEGIN_SRC shell :results file :exports results :cache yes :eval no
+  scp bird-passage:/DATA/projects/ingester/ingestion_log.dat ./ > /dev/null
+  grep -o "Total elapsed=[0-9]*ms" ingestion_log.dat > times.log
+  grep -o "Load:.*$" ingestion_log.dat > loads.log
+  python3 -m venv ./.env/; source .env/bin/activate; pip install py-gnuplot &> /dev/null
+  python3 plotter.py &> /dev/null
+  echo file:./ingestion.svg
+#+END_SRC
+
+#+RESULTS[bf3a1badf096c9257f6b9e7fcd2a354d78d57171]:
+[[file:./ingestion.svg]]
+
+Using the output log, we plot the number of statements and ingestion
+time of each compressed turtle file.
+
+
+* Running
+
+Once the Blazegraph journal exists, we 
+
+
+We `scp` the passage-server with dependencies to the remote machine.
+By setting the port to 80 or 443, we get `java.net.BindException: Permission denied`.
+
+#+BEGIN_SRC shell
+java -jar passage-server.jar -d /DATA/datasets/watdiv10m-blaze/watdiv10M.jnl --port 443 --timeout=1000
+#+END_SRC
+
+Need to be super-user to do so on this port. On port 80, since the
+nginx presumably redirects it from 443 to 80.
+
+#+BEGIN_SRC bash
+sudo java -jar passage-server.jar -d /DATA/datasets/watdiv10m-blaze/watdiv10M.jnl --port 80 --timeout=1000
+#+END_SRC
+
+#+BEGIN_SRC bash
+curl -v -X GET --http1.1 -G --data-urlencode "query=SELECT * WHERE {?s ?p ?o} LIMIT 10" "https://10-54-2-226.gcp.glicid.fr/watdiv10M.jnl/passage"
+#+END_SRC
+
+*** TODO Deploy ha-proxy in front of {{{PASSAGE}}}.
+
+
+* Updating
+
+Wikidata's data is constantly evolving. Anyone can add new statements
+to the knowledge graph. Therefore, ingesting a dump is not enough for
+a legit Wikidata mirror. It must be updated regularly to follow the
+changes made by the community.
+
+Fortunately, Wikidata provides deployers with tools to update their
+database, granted it is a SPARQL endpoint that accepts =UPDATE=.  Our
+mirror must be able accept the update from, and only from, a Wikidata
+source.
+
+*** TODO Make the endpoint accept updates.
+
+* References
+
+- https://addshore.com/2019/10/your-own-wikidata-query-service-with-no-limits/
+- https://www.mediawiki.org/wiki/Wikidata_Query_Service/Implementation/Standalone
+- https://github.com/wmde/wikibase-release-pipeline
+- https://github.com/wikimedia/wikidata-query-rdf
+  

@@ -1,6 +1,9 @@
 .DS_Store
 *~
 
+*.dat
+*.log
+
 node_modules/
 package-lock.json
 *.html

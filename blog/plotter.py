@@ -4,6 +4,7 @@ from pygnuplot import gnuplot
 import re
 import pandas as pd
 
+# TODO generate loads and times instead of grep outside
 LOADS = "./loads.log"
 TIMES = "./times.log"
 
@@ -28,8 +29,8 @@ total_times = sum(item['elapsed'] for item in csv)/1000/60/60
 
 g = gnuplot.Gnuplot(log = True)
 
-g.set(terminal = 'pngcairo enhanced font "arial,8" fontscale 1.0 size 800, 600 ',
-      output = '"ingestion.png"',
+g.set(terminal = 'svg enhanced font "Arial,16" size 1200, 675',
+      output = '"ingestion.svg"',
       style = ["fill transparent solid 0.50 noborder", "data lines", "function filledcurves y1=0"],
       multiplot = True,)
 
@@ -38,18 +39,21 @@ df = pd.DataFrame(csv)
 
 
 g.plot_data(df,
-            f'using 0:($2/100000) title "total: {total_stmts:,} statements" with lines lt 2',
+            f'using 0:($2/10000) title "total: {total_stmts:,} statements" with lines lt 2 lc rgb "#88c0d0"',
             size = '1, 0.5',
             origin = '0, 0.5',
             xrange = f'[0:{len(csv)}]',
-            ylabel = '"number of statements (x10^5)"',
-            format = 'x ""')
+            ylabel = '"number of statements (x10^4)" offset 1.8,0',
+            xlabel = '" "',
+            format = 'x " "',
+            margins = "7, 0.1, 0.5, 3") # left right top bottom
 
 g.plot_data(df,
-            f'using 0:($3/1000) title "total: {"{:.1f}".format(total_times)}h" with lines lt 2',
+            f'using 0:($3/1000) title "total: {"{:.1f}".format(total_times)}h" with lines lt 2 lc rgb "#88c0d0"',
             size = '1, 0.5',
             origin = '0, 0',
             xrange = f'[0:{len(csv)}]',
             ylabel = '"ingestion time (s)"',
             xlabel = '"n^{th} ingested file"',
-            format = ["x"])
+            format = ["x"],
+            margins = "7, 0.1, 3, 0.5")

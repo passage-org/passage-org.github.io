@@ -23,8 +23,6 @@
 
 
 
-
-
 #art {
     position: absolute;
     top: 0px;
@@ -76,6 +74,16 @@ a:visited {
 
 .outline-text-2, .outline-text-3 {
     position: relative;
+}
+
+img {
+    width: 100%;
+    position: relative; /* TODO: this should only work for plots */
+    left: calc(0px - 1em);  /* Shift so the origin is without the ylabel */
+}
+
+.figure {
+    padding: 0;
 }
 
 
