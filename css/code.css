@@ -8,6 +8,10 @@
     font-size:   var(--code-font-size);
 }
 
+.example {
+    background-color: light-dark(var(--nord6), var(--nord1));
+}
+
 .org-keyword {
     color: var(--nord8);
 }

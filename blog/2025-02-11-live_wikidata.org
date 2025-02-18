@@ -208,6 +208,7 @@ Total elapsed=1800641ms
 …
 #+END_EXAMPLE
 
+#+BEGIN_COMMENT
 There are 370 files for 20/100Gb munged. So we can expected 1700
 files. If the ingestion rate remains the same, we can expect 130s*1700/3600=61h
 
@@ -218,17 +219,12 @@ Munging stopped at roughly 4:30, totaling 2044 files, for 103GB.
 At 9:44, only 228 files have been ingested, representing 1.660.210.886
 statements. The size of the journal is 154GB.
 
-On a side note:
-- The ingestion of each file often starts with multithreading, but
-  slows down over time until one thread remains for
-  a long time.
-- The CPU is not well exploited, perhaps launching
-  Blazegraph as a server would allow for better parallelism.
-- The RAM does not seem to be used extensively. It remains around a
-  7GB usage.
-
 At 11:25 on monday, 571 files have been ingested, representing
 3.950.871.981 statements. The size of the journal is 345GB.
+
+At 14:46 on tuesday, 630 files have been ingested, representing
+4.526.172.446 statements. The size of the journal is 394GB.
+#+END_COMMENT
 
 #+BEGIN_SRC shell :results file :exports results :cache yes :eval no
   scp bird-passage:/DATA/projects/ingester/ingestion_log.dat ./ > /dev/null
@@ -236,12 +232,12 @@ At 11:25 on monday, 571 files have been ingested, representing
   grep -o "Load:.*$" ingestion_log.dat > loads.log
   python3 -m venv ./.env/; source .env/bin/activate; pip install py-gnuplot &> /dev/null
   python3 plotter.py &> /dev/null
-  echo file:./ingestion.svg
+  echo ./ingestion.svg
 #+END_SRC
 
-#+RESULTS[bf3a1badf096c9257f6b9e7fcd2a354d78d57171]:
-[[file:./ingestion.svg]]
-
+#+RESULTS[0e2c682d2dec9f51f1195d864940a9a1ee62ecfa]:
+[[file:./ingestion.svg
+]]
 Using the output log, we plot the number of statements and ingestion
 time of each compressed turtle file.
 
@@ -256,6 +252,12 @@ underlying balanced tree data structure used by Blazegraph for its
 indexes. Not only the depth of the tree increases, but dichotomic
 searches to find the insertion location take longer and longer.
 
+Unfortunately, even for us, this is too slow. Resources are largely
+underexploited: CPU usage remains very low, RAM usage is below
+10GB. To avoid opening the journal that now takes 150s, and to
+hopefully get better multithreading capabilities, we load folders of
+100 compressed turtle files.
+
 #+BEGIN_COMMENT
 That being said, after 96h of ingestion, we are behind schedule.
 #+END_COMMENT
@@ -267,8 +269,10 @@ service that will accept SPARQL queries, execute them on the journal,
 time out when their execution reaches the 60-seconds threshold, but
 send back a SPARQL continuation query along with its partial results.
 
-The architecture is classic.
-
+The architecture is basic. End-users connect through a [[https://www.glicid.fr/][glicid]] url;
+where a [[https://nginx.org/en/][nginx]] redirects the request to our virtual machine; where an
+[[https://www.haproxy.org/][ha-proxy]] redirects the request to our SPARQL endpoint in charge of the
+database:
 
 #+BEGIN_EXAMPLE
                ┌ @https://10-54-2-226.gcp.glicid.fr/
@@ -277,27 +281,21 @@ user 2 <-----> │ ha-proxy <-----> │ passage-server <-> wikidata.jnl
 user 3 <-----> │
 #+END_EXAMPLE
 
-
-We `scp` the passage-server with dependencies to the remote machine.
-By setting the port to 80 or 443, we get `java.net.BindException: Permission denied`.
+#+BEGIN_SRC shell
+  java -jar passage-server.jar \
+       -d /DATA/datasets/watdiv10m-blaze/watdiv10M.jnl \
+       --port 8080 \
+       --timeout=60000
+#+END_SRC
 
 #+BEGIN_SRC shell
-java -jar passage-server.jar -d /DATA/datasets/watdiv10m-blaze/watdiv10M.jnl --port 443 --timeout=1000
-#+END_SRC
-
-Need to be super-user to do so on this port. On port 80, since the
-nginx presumably redirects it from 443 to 80.
-
-#+BEGIN_SRC bash
-sudo java -jar passage-server.jar -d /DATA/datasets/watdiv10m-blaze/watdiv10M.jnl --port 80 --timeout=1000
-#+END_SRC
-
-#+BEGIN_SRC bash
-curl -v -X GET --http1.1 -G --data-urlencode "query=SELECT * WHERE {?s ?p ?o} LIMIT 10" "https://10-54-2-226.gcp.glicid.fr/watdiv10M.jnl/passage"
+  curl -v -X GET --http1.1 -G \
+       --data-urlencode "query=SELECT * WHERE {?s ?p ?o} LIMIT 10" \
+       "https://10-54-2-226.gcp.glicid.fr/watdiv10M.jnl/passage"
 #+END_SRC
 
 *** TODO Deploy ha-proxy in front of {{{PASSAGE}}}.
-
+*** TODO Automatic restart when the service is down.
 
 * Updating
 
