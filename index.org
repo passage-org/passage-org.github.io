@@ -77,63 +77,6 @@ free to post issues, or to ask questions there. The reminder of this
 section provides details about possible contributions that would be
 greatly appreciated.
 
-** Support for Backends
-
-To improve adoption, one major aspect of continuation queries concerns
-the support for databases such as [[https://blazegraph.com/][Blazegraph]], [[https://jena.apache.org/][Apache Jena]], or [[https://rdf4j.org/][RDF4J]].
-
-*** Blazegraph
-
-With our first release, we focused on [[https://blazegraph.com/][Blazegraph]]. Despite its
-terminated support, the *augmented* balanced trees representing the
-triple/quad data store allows {{{PASSAGE}}} to efficiently skip large
-part of triple/quad patterns, making simple subqueries with =OFFSET=
-clauses executable.
-
-#+BEGIN_SRC sparql :url https://query.wikidata.org/sparql :format text/csv :cache yes :synch no :exports code
-  SELECT * WHERE {         # A SELECT query or sub-query
-    BIND (rdf:type AS ?p)  # Var(s) assignment(s)
-    ?s ?p ?o               # One triple/quad pattern only
-  } OFFSET 18000000        # May need to skip a lot of elements
-#+END_SRC
-
-On such a query, Blazegraph uses an index where =?p= is bounded first
-=POS=. Thus, retrieving all =?o= and =?s= for such a predicate remains
-efficient. The results are produced in a deterministic order.  The
-=OFFSET= states that the first 18000000 results should be
-ignored. Instead of exploring these results then dropping them,
-{{{PASSAGE}}} uses the index to retrieve the key at targeted offset,
-and starts the range query there.
-#+BEGIN_right-comment
-The time complexity to create these iterators for range queries is
-logarithmic compared to the number of elements matching the pattern.
-#+END_right-comment
-
-By using such sub-queries as basis, {{{PASSAGE}}} is able to pause and
-resume the query execution of more complex SPARQL queries. 
-
-*** Adding Support
-
-Our aim is to support many databases with minimal effort, without
-modifying the data. To that end, one must implement the interface
-[[https://github.com/passage-org/passage/blob/main/passage-commons/src/main/java/fr/gdd/passage/commons/interfaces/Backend.java][=Backend=]]. This interface requires three templates =<ID, VALUE, SKIP>=
-since most data structures rely on identifiers =<ID>= for storing the
-triples/quads but on their own =<VALUE>= to store their actual value
-(often in a separated dictionary).
-
-Then, backends must provide a range query search that instantiate an
-iterator:
-#+BEGIN_SRC java :exports code
-  BackendIterator<ID, VALUE, SKIP> search(final ID s, final ID p, final ID o);
-#+END_SRC
-
-Among other, the iterators must provide a skipping mechanism:
-#+BEGIN_SRC java :exports code
-  void skip(final SKIP to);
-#+END_SRC
-
-
-
 ** SPARQL Operators
 
 For a start, we focused on a subset of SPARQL operators: core SPARQL
