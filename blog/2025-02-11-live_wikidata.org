@@ -46,6 +46,7 @@ query engines enable continuation queries, i.e., queries that allow
 retrieving the missing results when the computation is stopped before
 completion.
 
+
 * Downloading
 
 The first step to create a live Wikidata SPARQL endpoint is to
@@ -244,10 +245,37 @@ At 11:25 on monday, 571 files have been ingested, representing
 Using the output log, we plot the number of statements and ingestion
 time of each compressed turtle file.
 
+The top figure shows that the number of statements widely differ from
+one file to another, but overall remains constant during the whole
+process.  Put in relation with the bottom figure, a large number of
+statements often means a long ingestion (as expected).
+
+The bottom figure about ingestion times is more informative: ingestion
+times are increasing over time. We suspect that it comes from the
+underlying balanced tree data structure used by Blazegraph for its
+indexes. Not only the depth of the tree increases, but dichotomic
+searches to find the insertion location take longer and longer.
+
+#+BEGIN_COMMENT
+That being said, after 96h of ingestion, we are behind schedule.
+#+END_COMMENT
 
 * Running
 
-Once the Blazegraph journal exists, we 
+Once the Blazegraph journal exists, we must start the {{{PASSAGE}}}
+service that will accept SPARQL queries, execute them on the journal,
+time out when their execution reaches the 60-seconds threshold, but
+send back a SPARQL continuation query along with its partial results.
+
+The architecture is classic.
+
+
+#+BEGIN_EXAMPLE
+               ┌ @https://10-54-2-226.gcp.glicid.fr/
+user 1 <-----> │                  ┌ @http://localhost:8080/
+user 2 <-----> │ ha-proxy <-----> │ passage-server <-> wikidata.jnl
+user 3 <-----> │
+#+END_EXAMPLE
 
 
 We `scp` the passage-server with dependencies to the remote machine.
@@ -291,4 +319,15 @@ source.
 - https://www.mediawiki.org/wiki/Wikidata_Query_Service/Implementation/Standalone
 - https://github.com/wmde/wikibase-release-pipeline
 - https://github.com/wikimedia/wikidata-query-rdf
+- https://wikidataworkshop.github.io/
+- https://wiki.bitplan.com/index.php/Get_your_own_copy_of_WikiData
   
+- Antoine Willerval, Dennis Diefenbach, and Pierre Maret. [[https://wikidataworkshop.github.io/2022/papers/Wikidata_Workshop_2022_paper_2349.pdf][Easily setting up a local Wikidata SPARQL endpoint using the qEndpoint]]. 2022.
+
+- Antoine Willerval, Dennis Diefenbach, and Angela Bonifati. [[https://hal.science/hal-04370881/document][qEndpoint: A Wikidata SPARQL endpoint on commodity hardware]]. 2023.
+
+- Wolfgang Fahl, Tim Holzheim, Andrea Westerinen, Christoph Lange, and Stefan Decker. [[https://wikidataworkshop.github.io/2022/papers/Wikidata_Workshop_2022_paper_4558.pdf][Getting and hosting your own copy of Wikidata]]. 2022.
+#+BEGIN_right-comment
+Fahl et al's paper constitutes our best entrypoint in terms of
+state-of-the-art.
+#+END_right-comment
