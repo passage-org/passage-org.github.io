@@ -30,8 +30,6 @@
 /This website is _under construction_. Please be patient…/
 #+END_CENTER
 
-
-
 * About
 
 {{{PASSAGE}}} constitutes an effort towards the adoption of SPARQL
@@ -40,7 +38,7 @@ timeout threshold on query execution time that enforce fair use
 policies…
 
 
-** Try it live!
+** +Try it live!+
 
 *** TODO unavailable for now: trial expired.
 
@@ -77,49 +75,14 @@ free to post issues, or to ask questions there. The reminder of this
 section provides details about possible contributions that would be
 greatly appreciated.
 
+- [[file:doc/passage-backends.org::#contributing][Support for backends]];
+- [[file:doc/passage-engine.org::#contributing][Additional SPARQL operators]].
+
 ** SPARQL Operators
 
 For a start, we focused on a subset of SPARQL operators: core SPARQL
-[[core-sparql][[3]]]. It comprises triple patterns, basic graph
-patterns, joins, unions, filters, and optionals.
-
-*** TODO a table of supported operators with associated passage's version
-
-#+NAME: meow
-#+BEGIN_SRC shell :results output :exports none :eval yes
-echo "\
-  Operator,     Support,    Comment
-  tp/qp   ,     =0.0.1=,
-  Join    ,     =0.0.1=,
-  BGP     ,     =0.0.1=,    BGPs are transformed in a series of joined tp/qp.
-  Union   ,     =0.0.1=,
-  Values  ,     =0.0.1=,
-  Filter  ,     =0.0.1=, "
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp :var data=meow :results raw :exports results :eval yes
-  (with-temp-buffer
-    (insert data)
-    (org-table-convert-region (point-min) (point-max) ",")
-    (buffer-string))
-#+END_SRC
-
-#+RESULTS:
-| Operator | Support | Comment                                           |
-| tp/qp    | =0.0.1= |                                                   |
-| Join     | =0.0.1= |                                                   |
-| BGP      | =0.0.1= | BGPs are transformed in a series of joined tp/qp. |
-| Union    | =0.0.1= |                                                   |
-| Values   | =0.0.1= |                                                   |
-| Filter   | =0.0.1= |                                                   |
-
-
-
-But the principle of continuation queries goes beyond these
-operators. For instance, we already know that a subset of aggregation
-queries allow continuation…
-
-*** TODO example of a continuation query using aggregates.
+[3]. It comprises triple patterns, basic graph patterns, joins,
+unions, filters, and optionals.
 
 
 ** Smart Clients
@@ -155,14 +118,5 @@ Contributions in this area are twofolds:
 
 * References
 
-**** TODO [1] /Thi Hoang Thi Pham, Gabriela Montoya, Brice Nédelec, Hala Skaf-Molli, and Pascal Molli/. _PASSAGE: Ensuring Completeness and Responsiveness of Public SPARQL Endpoints with SPARQL Continuation Queries_. 2025.
-<<passage>>
+#+INCLUDE: "./references.org::References" :only-contents t
 
-**** [2] /Thomas Minier, Hala Skaf-Molli, and Pascal Molli/. [[https://dl.acm.org/doi/10.1145/3308558.3313652][SaGe: Web Preemption for Public SPARQL Query Services]]. 2019.
-<<sage>>
-
-**** [3] /Jorge Pérez, Marcelo Arenas, and Claudio Gutiérrez/. [[https://dl.acm.org/doi/10.1145/1567274.1567278][Semantics and complexity of SPARQL]]. 2009.
-<<core-sparql>>
-
-**** [4] /Ruben Taelman, Joachim Van Herwegen, Miel Vander Sande, and Ruben Verborgh/. [[https://dl.acm.org/doi/10.1007/978-3-030-00668-6_15][Comunica: A Modular SPARQL Query Engine for the Web]]. 2018.
-<<comunica>>

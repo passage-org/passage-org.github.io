@@ -10,8 +10,9 @@
 
 #+OPTIONS: toc:nil
 #+OPTIONS: num:nil
-#+OPTIONS: prop:t
 #+OPTIONS: html-postamble:nil # removes the footer
+#+OPTIONS: H:1
+#+OPTIONS: prop:nil # hide the properties
 
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/font.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/style.css" />
@@ -60,6 +61,10 @@ compared to the number of elements matching the pattern.
 
 
 * Contributing
+:PROPERTIES:
+:ID:       F03FE66D-7528-4543-842F-0F70E9BDA911
+:CUSTOM_ID: contributing
+:END:
 
 To improve adoption, one major aspect of continuation queries concerns
 the support for databases such as [[https://jena.apache.org/][Apache Jena]], [[https://rdf4j.org/][RDF4J]], or [[https://www.rdfhdt.org/][HDT]].
@@ -88,6 +93,6 @@ Among other, the iterators must provide a skipping mechanism:
 
 *** TODO Benchmarks
 
-* TODO References
+* References
 
-
+#+INCLUDE: "../references.org::References" :only-contents t

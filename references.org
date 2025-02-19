@@ -1,0 +1,17 @@
+
+* References
+
+- [1] Thi Hoang Thi Pham, Gabriela Montoya, Brice Nédelec, Hala
+  Skaf-Molli, and Pascal Molli. PASSAGE: Ensuring Completeness and
+  Responsiveness of Public SPARQL Endpoints with SPARQL Continuation
+  Queries. 2025.
+
+- [2] Thomas Minier, Hala Skaf-Molli, and Pascal Molli. SaGe: Web
+  Preemption for Public SPARQL Query Services. 2019.
+
+- [3] Jorge Pérez, Marcelo Arenas, and Claudio Gutiérrez. Semantics
+  and complexity of SPARQL. 2009.
+
+- [4] Ruben Taelman, Joachim Van Herwegen, Miel Vander Sande, and
+  Ruben Verborgh. Comunica: A Modular SPARQL Query Engine for the
+  Web. 2018.
