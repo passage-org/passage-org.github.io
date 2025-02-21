@@ -22,25 +22,24 @@
 #+HTML_HEAD: <script src="js/main.js" type="text/javascript"></script>
 #+HTML_HEAD: <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
 
+#+BIBLIOGRAPHY: "./bibliography.bib"
+#+cite_export: csl ./springer-basic-brackets-no-et-al-alphabetical.csl
+
 #+BEGIN_CENTER
 *Ensuring Completeness and Responsiveness of Public SPARQL Endpoints*
 
 *with SPARQL Continuation Queries.*
-
-/This website is _under construction_. Please be patient…/
 #+END_CENTER
 
 * About
 
-{{{PASSAGE}}} constitutes an effort towards the adoption of SPARQL
+{{{PASSAGE}}} [cite:@pham2025passage] constitutes an effort towards the adoption of SPARQL
 query engines that provide complete and correct results! despite their
 timeout threshold on query execution time that enforce fair use
 policies…
 
 
-** +Try it live!+
-
-*** TODO unavailable for now: trial expired.
+** +Try it live!+ Unavailable for now: trial expired.
 
 +We pushed a live demonstration on [[https://live-demo-4455226726.europe-west2.run.app/][{{{GOOGLE}}} Google Cloud]].+
 
@@ -55,6 +54,10 @@ so please be patient…
 +divides query executions between the remote {{{PASSAGE}}} endpoint and+
 +the local web client Comunica.+
 
+* News
+
+#+INCLUDE: "./blog/blog.org::News" :only-contents t
+
 * Contribute
 
 The code base is available on the [[https://github.com/orgs/passage-org/repositories][{{{GITHUB}}} GitHub platform]]. Feel
@@ -67,5 +70,6 @@ possible contributions that would be greatly appreciated are:
 
 * References
 
-#+INCLUDE: "./references.org::References" :only-contents t
+#+print_bibliography:
+
 
