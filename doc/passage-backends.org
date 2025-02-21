@@ -62,7 +62,6 @@ compared to the number of elements matching the pattern.
 
 * Contributing
 :PROPERTIES:
-:ID:       F03FE66D-7528-4543-842F-0F70E9BDA911
 :CUSTOM_ID: contributing
 :END:
 

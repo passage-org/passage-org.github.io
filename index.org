@@ -66,8 +66,6 @@ results.
 *** TODO provide a series of SPARQL execution as example.
 *** TODO provide an environment to display SPARQL queries.
 
-
-
 * Contribute
 
 The code base is available on the [[https://github.com/orgs/passage-org/repositories][{{{GITHUB}}} GitHub platform]]. Feel
@@ -75,46 +73,9 @@ free to post issues, or to ask questions there. The reminder of this
 section provides details about possible contributions that would be
 greatly appreciated.
 
-- [[file:doc/passage-backends.org::#contributing][Support for backends]];
-- [[file:doc/passage-engine.org::#contributing][Additional SPARQL operators]].
-
-** SPARQL Operators
-
-For a start, we focused on a subset of SPARQL operators: core SPARQL
-[3]. It comprises triple patterns, basic graph patterns, joins,
-unions, filters, and optionals.
-
-
-** Smart Clients
-
-{{{PASSAGE}}} solely relies on the SPARQL standard to pause and resume
-a query execution until completion. When a SPARQL continuation query
-is sent back by the SPARQL endpoint, the requester is in charge of
-returning it back to the endpoint, to get complete results.
-
-*** TODO example using ~curl~.
-
-It remains tedious… Instead, we [[https://github.com/passage-org/passage-comunica][added an actor]] to the smart client
-[[https://comunica.dev/][Comunica]]. With a few lines of code, this web client is able to
-decompose the query to run locally the operators that the remote
-endpoint cannot handle.
-
-*** TODO example of decomposed plan.
-
-Contributions in this area are twofolds:
-
-+ Keep the smart client up-to-date with Comunica. /For instance, the
-  current implementation sets the subset of operations handled by
-  {{{PASSAGE}}}. Instead, the server should advertise it./
-
-
-+ Implement the same logic in other smart client. /While Comunica
-  provides a convenient browser experience, it lacks some
-  multithreading capabilities. Other engines such as [[https://github.com/LiUSemWeb/HeFQUIN][HeFQUIN]] could
-  fill this gap./
-
-
-
+- [[file:doc/passage-backends.org::#contributing][Additional support for backends]];
+- [[file:doc/passage-engine.org::#contributing][Additional support for SPARQL operators]]
+- [[file:doc/passage-clients.org::#contributing][Additional support for Smart Clients]].
 
 * References
 

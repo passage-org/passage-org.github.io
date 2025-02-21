@@ -1,0 +1,9 @@
+* PASSAGE
+
+This project aims at deploying a front page for PASSAGE, where our
+goals are clearly stated.
+
+#+BEGIN_COMMENT
+Github action to deploy it automatically on push:
+https://github.com/marketplace/actions/org-knit
+#+END_COMMENT
