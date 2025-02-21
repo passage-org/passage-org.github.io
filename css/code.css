@@ -24,6 +24,6 @@
     color: var(--nord13);
 }
 
-.org-comment{
+.org-comment, .org-comment-delimiter {
     color: light-dark(var(--nord4), var(--nord3));
 }

@@ -42,7 +42,7 @@ policies…
 
 *** TODO unavailable for now: trial expired.
 
-We pushed a live demonstration on [[https://live-demo-4455226726.europe-west2.run.app/][{{{GOOGLE}}} Google Cloud]].
++We pushed a live demonstration on [[https://live-demo-4455226726.europe-west2.run.app/][{{{GOOGLE}}} Google Cloud]].+
 
 #+BEGIN_right-comment
 For the first run, the service might
@@ -50,31 +50,19 @@ take time to wake  up from idle mode;
 so please be patient…
 #+END_right-comment
 
-It serves a [[https://dsg.uwaterloo.ca/watdiv/][WatDiv10M dataset]] ingested using the standard [[https://blazegraph.com/][Blazegraph]]
-import procedure. We [[https://github.com/passage-org/passage-comunica][added an actor]] to the smart client [[https://comunica.dev/][Comunica]] that
-divides query executions between the remote {{{PASSAGE}}} endpoint and
-the local web client Comunica.
-
-** How does it work?
-
-On public SPARQL endpoints, a SPARQL query cannot run for more than a
-predefined amount of time. When the query execution time reach this
-threshold, the query execution is stopped. The results are partial and
-a SPARQL continuation query is returned to provide the missing
-results.
-
-*** TODO provide a series of SPARQL execution as example.
-*** TODO provide an environment to display SPARQL queries.
++It serves a [[https://dsg.uwaterloo.ca/watdiv/][WatDiv10M dataset]] ingested using the standard [[https://blazegraph.com/][Blazegraph]]+
++import procedure. We [[https://github.com/passage-org/passage-comunica][added an actor]] to the smart client [[https://comunica.dev/][Comunica]] that+
++divides query executions between the remote {{{PASSAGE}}} endpoint and+
++the local web client Comunica.+
 
 * Contribute
 
 The code base is available on the [[https://github.com/orgs/passage-org/repositories][{{{GITHUB}}} GitHub platform]]. Feel
-free to post issues, or to ask questions there. The reminder of this
-section provides details about possible contributions that would be
-greatly appreciated.
+free to post issues, or to ask questions there. Among others, the
+possible contributions that would be greatly appreciated are:
 
 - [[file:doc/passage-backends.org::#contributing][Additional support for backends]];
-- [[file:doc/passage-engine.org::#contributing][Additional support for SPARQL operators]]
+- [[file:doc/passage-engine.org::#contributing][Additional support for SPARQL operators]];
 - [[file:doc/passage-clients.org::#contributing][Additional support for Smart Clients]].
 
 * References

@@ -44,8 +44,8 @@ terminated support, it presents a unique feature that we can take
 advantage of, to pause and continue query executions:
 
 It uses an *augmented* balanced tree for each index, i.e., a counter
-is associated with each tree nodes that allows {{{PASSAGE}}} to
-efficiently skip large part of triple/quad patterns. Simple SPARQL
+is associated with each tree node that allows {{{PASSAGE}}} to
+efficiently skip large parts of triple/quad patterns. Simple SPARQL
 queries like the following are efficiently computed:
 #+BEGIN_right-comment
 The time complexity to create range query iterators is logarithmic

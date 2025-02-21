@@ -11,7 +11,6 @@
 #+OPTIONS: toc:nil
 #+OPTIONS: num:nil
 #+OPTIONS: html-postamble:nil # removes the footer
-#+OPTIONS: H:1
 #+OPTIONS: prop:nil # hide the properties
 
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/font.css" />
@@ -21,6 +20,8 @@
 #+HTML_HEAD: <script src="../js/main.js" type="text/javascript"></script>
 #+HTML_HEAD: <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
 
+#+BIBLIOGRAPHY: "../bibliography.bib"
+#+cite_export: csl ../springer-basic-brackets-no-et-al-alphabetical.csl
 
 #+BEGIN_CENTER
 *Smart Clients*
@@ -29,39 +30,104 @@
 #+END_CENTER
 
 
-{{{PASSAGE}}} 
+When a SPARQL query times out, {{{PASSAGE}}} provides partial results
+along with a continuation query to retrieve the missing
+results. Therefore, an end-user must sends back the continuation query
+to the {{{PASSAGE}}} server to get the missing results (possibly
+multiple times when continuation queries time out as well).
+
+#+BEGIN_EXAMPLE
+  end-user                                          passage-server
+     ┃                                                     ┃
+     ┃ ── curl SPARQL query ─────────────────────────────> ┃
+     ┃                                                     ┣ 60s-timeout
+     ┃ <─────────── partial results, continuation query ── ┃
+     ┃                                                     ┃
+     ┃ ── curl continuation query ───────────────────────> ┃
+     ┃                                                     ┣ 60s-timeout
+     ┃ <─────────────────────────────── partial results ── ┃
+done ┛                                                     ┃
+#+END_EXAMPLE
+
+
+To ease this tedious process, we rely on smart clients to implement
+the loop until completion:
+
+#+BEGIN_EXAMPLE
+  end-user  smart-client                            passage-server
+     ┃           ┃                                         ┃
+     ┃ ───────── ┃ ── SPARQL query ──────────────────────> ┃
+     ┃           ┃                                         ┣ 60s-timeout
+     ┃           ┃ <─ partial results, continuation query  ┃
+     ┃           ┃                                         ┃
+     ┃           ┃ ── continuation query ────────────────> ┃
+     ┃           ┃                                         ┣ 60s-timeout
+     ┃ <──────── ┃ ──────────────────── partial results ── ┃
+done ┛                                                     ┃
+#+END_EXAMPLE
+
+
+We also rely on smart clients to fill the gap between SPARQL 1.1 and
+the current state of supported operators by {{{PASSAGE}}}. When an
+operator is not (/yet/) supported by {{{PASSAGE}}}, the smart client
+handles the operator itself. Together, they provide complete and
+correct results for SPARQL.
+#+BEGIN_right-comment
+We still want to push as many operators as possible to the server. It
+improves on query execution times, reduces generated traffic, etc.
+#+END_right-comment
+
+* Comunica
+
+For our first release, we took advantage of the smart client [[https://comunica.dev/][Comunica
+=v4.0.x=]] [cite:@taelman2018comunica].  Comunica is a SPARQL
+query engine with an emphasis on modularity. To ensure completeness of
+query results, it already includes actors such as quad pattern
+fragments (qpf), or brqpf. We wanted to provide one for continuation
+queries. Following the recommendation, we implemented [[https://github.com/passage-org/passage-comunica/tree/main/packages/actor-query-source-identify-hypermedia-passage][our own actor]]
+which mostly ressembles their SPARQL source actor.
+
+In this version =v4.0.x=, you can state the range of supported
+operators, and the engine will decompose the query for you: operators
+handled by {{{PASSAGE}}}, and operators handled by Comunica.
+
+** Quickstart
+
+#+BEGIN_SRC shell
+  # Retrieve the sources
+  git clone git@github.com:passage-org/passage-comunica.git
+  cd passage-comunica
+
+  # Similarly to Comunica
+  yarn install
+
+  yarn run query-passage \
+       http://localhost:3000/watdiv10M.jnl/passage \
+       -f path/to/query --logLevel=debug > results.dat
+#+END_SRC
+
+In this script, we ask the already running {{{PASSAGE}}} endpoint on
+=localhost:3000= to provide the results to the query
+=path/to/query=. We enable =debug= to print the continuation queries
+on the standard error output stream, while the results are printed in
+=results.dat=.
 
 * Contributing
 :PROPERTIES:
 :CUSTOM_ID: contributing
 :END:
 
-{{{PASSAGE}}} solely relies on the SPARQL standard to pause and resume
-a query execution until completion. When a SPARQL continuation query
-is sent back by the SPARQL endpoint, the requester is in charge of
-returning it back to the endpoint, to get complete results.
+*** Keep the smart client up-to-date with Comunica.
+/For instance, the current implementation sets the subset of
+  operations handled by {{{PASSAGE}}}. Instead, the server should
+  advertise it./
 
-*** TODO example using ~curl~.
-
-It remains tedious… Instead, we [[https://github.com/passage-org/passage-comunica][added an actor]] to the smart client
-[[https://comunica.dev/][Comunica]]. With a few lines of code, this web client is able to
-decompose the query to run locally the operators that the remote
-endpoint cannot handle.
-
-*** TODO example of decomposed plan.
-
-Contributions in this area are twofolds:
-
-+ Keep the smart client up-to-date with Comunica. /For instance, the
-  current implementation sets the subset of operations handled by
-  {{{PASSAGE}}}. Instead, the server should advertise it./
-
-
-+ Implement the same logic in other smart client. /While Comunica
-  provides a convenient browser experience, it lacks some
-  multithreading capabilities. Other engines such as [[https://github.com/LiUSemWeb/HeFQUIN][HeFQUIN]] could
-  fill this gap./
+*** Implement the same logic in other smart clients.
+/While Comunica provides a convenient browser experience, it lacks
+  some multithreading capabilities. Other engines such as [[https://github.com/LiUSemWeb/HeFQUIN][HeFQUIN]]
+  could fill this gap./
 
 * References
 
-#+INCLUDE: "../references.org::References" :only-contents t
+#+print_bibliography:
+

@@ -3,7 +3,15 @@
 This project aims at deploying a front page for PASSAGE, where our
 goals are clearly stated.
 
+The website is static, we use [[https://orgmode.org][org-mode]] to generate it. It is
+complemented by css and javascript, when needed.
+
 #+BEGIN_COMMENT
 Github action to deploy it automatically on push:
 https://github.com/marketplace/actions/org-knit
 #+END_COMMENT
+
+These pages are also meant to be the READMEs of their corresponding
+GitHub project.
+
+
