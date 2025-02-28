@@ -1,29 +1,9 @@
-#+MACRO: PASSAGE PASSAGE
-#+MACRO: GITHUB @@html:<i class="fab fa-github" aria-hidden="true"></i>@@
-#+MACRO: GOOGLE @@html:<i class="fab fa-google" aria-hidden="true"></i>@@
-
-#+TITLE: {{{PASSAGE}}}
 #+DATE: [2025-01-27 Lun]
-#+AUTHOR: chat-wane
-#+EMAIL: grumpy dot chat dot wane at gmail dot com
+#+SETUPFILE: ./configs/html.org
 
-#+HTML_DOCTYPE: html5
-#+HTML_XML_DECL: none # this removes <?xml …> that prevents vite from serving
+#+BIBLIOGRAPHY: ./bibliography.bib
+#+CITE_EXPORT: csl ./springer-basic-brackets-no-et-al-alphabetical.csl
 
-#+OPTIONS: toc:nil
-#+OPTIONS: num:nil
-#+OPTIONS: prop:t
-#+OPTIONS: html-postamble:nil # removes the footer
-
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/font.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/style.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/code.css" />
-#+HTML_HEAD: <script src="js/network.js" type="text/javascript"></script>
-#+HTML_HEAD: <script src="js/main.js" type="text/javascript"></script>
-#+HTML_HEAD: <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
-
-#+BIBLIOGRAPHY: "./bibliography.bib"
-#+cite_export: csl ./springer-basic-brackets-no-et-al-alphabetical.csl
 
 #+BEGIN_CENTER
 *Ensuring Completeness and Responsiveness of Public SPARQL Endpoints*
