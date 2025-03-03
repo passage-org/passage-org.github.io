@@ -2,6 +2,7 @@
 
 #+TITLE: {{{PASSAGE}}}
 #+DATE: [2025-02-18 Mar]
+
 #+AUTHOR: chat-wane
 #+EMAIL: grumpy dot chat dot wane at gmail dot com
 
@@ -20,8 +21,8 @@
 #+HTML_HEAD: <script src="../js/main.js" type="text/javascript"></script>
 #+HTML_HEAD: <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
 
-#+cite_export: csl ../springer-basic-brackets-no-et-al-alphabetical.csl
-#+BIBLIOGRAPHY: "../bibliography.bib"
+#+BIBLIOGRAPHY: ../bibliography.bib
+#+CITE_EXPORT: csl ../springer-basic-brackets-no-et-al-alphabetical.csl
 
 #+BEGIN_CENTER
 *Backends*

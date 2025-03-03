@@ -15,3 +15,47 @@ These pages are also meant to be the READMEs of their corresponding
 GitHub project.
 
 
+** Publishing
+
+#+BEGIN_COMMENT
+take a look at <https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html>
+#+END_COMMENT
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (setq org-publish-project-alist
+        '(("org-passage"
+           :base-directory "./"
+           :publishing-directory "./public_html/"
+           :exclude "^public-html/.*"
+           :base-extension "org"
+           :recursive t
+           :with-macros t 
+           :publishing-function org-html-publish-to-html)
+          ("js-static"
+           :base-directory "./js"
+           :base-extension "js"
+           :publishing-directory "./public_html/js"
+           :exclude "^public-html/.*"
+           :recursive t
+           :publishing-function org-publish-attachment)
+          ("css-static"
+           :base-directory "./css"
+           :base-extension "ttf\\|woff2\\|svg\\|css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+           :publishing-directory "./public_html/css"
+           :exclude "^public-html/.*"
+           :recursive t
+           :publishing-function org-publish-attachment)
+          ("figure-static"
+           :base-directory "./"
+           :base-extension "svg"
+           :publishing-directory "./public_html/"
+           :include ("./blog/ingestion.svg")
+           :publishing-function org-publish-attachment)
+          
+        ("full-passage" :components ("org-passage" "js-static" "css-static" "figure-static"))))
+
+  (delete-directory "./public_html" t)
+  (org-publish-project "full-passage" t)
+  (copy-directory "./node_modules" "./public_html/node_modules")
+#+END_SRC
+
