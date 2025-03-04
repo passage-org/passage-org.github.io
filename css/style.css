@@ -35,6 +35,7 @@
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
     margin:0;
     padding:0;
+    position:relative;
 }
 
 body {
@@ -224,8 +225,101 @@ p {
 
 
 
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); box-shadow: 6px 8px 20px rgba(0,0,0,0.3);}
+    100% { transform: translateY(0); }
+}
+
 .feature_cards {
-    width: 30%;
+    background-color: var(--background-color);
+    width: 31%;
     display:inline-block;
     text-align:center;
+    border: solid 1px;
+    border-radius: 5px;
+    border-color: var(--text-subheader-color);
+    min-height: 260px;
+    padding: 5px;
+    vertical-align: top;
+    animation: float 10s ease-in-out infinite;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.feature_cards:nth-of-type(3n+1) {animation-delay: -3s}
+.feature_cards:nth-of-type(3n+2) {animation-delay: -2s}
+.feature_cards:nth-of-type(3n+3) {animation-delay: -1s}
+
+.feature_cards:hover {
+    animation-play-state: paused;
+}
+
+.feature_cards::before,
+.feature_cards::after {
+    font-family: "Font Awesome 5 Free"; /* Font Awesome font-family */
+    position: absolute;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--nord15);
+}
+
+.content-dove::before, .content-dove::after { content: "\f4ba"; }
+.content-paw::before, .content-paw::after { content: "\f1b0"; }
+.content-horse-head::before, .content-horse-head::after { content: "\f7ab"; }
+    
+.feature_cards::before {
+    top: 10px;
+    left: 10px;
+}
+
+.feature_cards::after {
+    bottom: 10px;
+    right: 10px;
+    transform: rotate(180deg);
+}
+
+.feature_cards dt i {
+    color: var(--nord15);
+    position: relative;
+    top: 2px;
+    left: 2px;
+}
+
+.feature_cards dd {
+    border-top: solid 1px;
+    border-color: var(--text-faded-color);
+    padding-top: 5px;
+    margin-top: 5px;
+    height:100%;
+    
+}
+
+
+
+.tag {
+    background-color: var(--background-color);
+}
+.tag span {
+    background-color: light-dark(var(--nord6), var(--nord1));
+}
+
+.tag span.WIP {
+    background-color: var(--nord11);
+    color: white;
+}
+
+.tag span.release {
+    background-color: var(--nord14);
+    color: white;
+}
+
+.tag span.announce {
+    background-color: var(--nord13);
+    color: white;
+}
+
+
+
+table {
+    width: 100%;
 }

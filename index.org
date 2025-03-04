@@ -42,35 +42,51 @@ query engines that provide complete and correct results! despite their
 timeout threshold on query execution time that enforce fair use
 policies…
 
-#+ATTR_HTML: :class feature_cards_1 feature_cards
-- {{{OPEN}}} Open :: Built using open source technologies. Available under open licensing.
+#+ATTR_HTML: :class feature_cards_1 feature_cards content-dove
+- Open :: All the code is available under an open license on
+  {{{GITHUB}}} [[https://github.com/passage-org][GitHub]] to support the creation of public knowledge
+  graphs. Feel free to contribute!
 
-#+ATTR_HTML: :class feature_cards_2 feature_cards
-- {{{COMPLETE}}} Satisfying :: Tired of the frustration of waiting for
+#+ATTR_HTML: :class feature_cards_2 feature_cards content-paw
+- Satisfying :: Tired of the frustration of waiting for
   results, only to get a timeout exception? You'll finally be able to
-  retrieve complete and correct results from your knowledge graphs.
+  retrieve complete and correct results from your knowledge graphs!
 
-#+ATTR_HTML: :class feature_cards_3 feature_cards
-- {{{FAST}}} Fast :: Leverage powerful knowledge graph backends.
+#+ATTR_HTML: :class feature_cards_3 feature_cards content-horse-head
+- Fast :: Leverage powerful knowledge graph backends.
 
-** +Try it live!+ Unavailable for now: trial expired.
 
-+We pushed a live demonstration on [[https://live-demo-4455226726.europe-west2.run.app/][{{{GOOGLE}}} Google Cloud]].+
 
-#+BEGIN_right-comment
-For the first run, the service might
-take time to wake  up from idle mode;
-so please be patient…
-#+END_right-comment
+# ** +Try it live!+ Unavailable for now: trial expired. 
 
-+It serves a [[https://dsg.uwaterloo.ca/watdiv/][WatDiv10M dataset]] ingested using the standard [[https://blazegraph.com/][Blazegraph]]+
-+import procedure. We [[https://github.com/passage-org/passage-comunica][added an actor]] to the smart client [[https://comunica.dev/][Comunica]] that+
-+divides query executions between the remote {{{PASSAGE}}} endpoint and+
-+the local web client Comunica.+
+# +We pushed a live demonstration on [[https://live-demo-4455226726.europe-west2.run.app/][{{{GOOGLE}}} Google Cloud]].+
+
+# #+BEGIN_right-comment
+# For the first run, the service might
+# take time to wake  up from idle mode;
+# so please be patient…
+# #+END_right-comment
+
+# +It serves a [[https://dsg.uwaterloo.ca/watdiv/][WatDiv10M dataset]] ingested using the standard [[https://blazegraph.com/][Blazegraph]]+
+# +import procedure. We [[https://github.com/passage-org/passage-comunica][added an actor]] to the smart client [[https://comunica.dev/][Comunica]] that+
+# +divides query executions between the remote {{{PASSAGE}}} endpoint and+
+# +the local web client Comunica.+
 
 * News
 
-#+INCLUDE: "./blog/blog.org::News" :only-contents t
+** More performance, more stability, more everything! :WIP:release:announce:
+/Parallelism, better Blazegraph, better configuration./
+
+** A live Wikidata!                                      :WIP:to_be_released:announce:
+/One major public SPARQL endpoint is Wikidata. [[file:blog/2025-02-11-live_wikidata.org][We built our own]], and
+ours provides complete and correct results, for everyone!/
+
+
+** Our first release!                                               :release:
+/The very first public release of our engine {{{PASSAGE}}}! It mostly
+revolves around (i) [[file:doc/passage-backends.org][available backends]], (ii) a [[file:doc/passage-engine.org][SPARQL engine]], and (iii)
+optionally [[file:doc/passage-clients.org][smart clients]]./
+
 
 * Contribute
 
@@ -78,7 +94,7 @@ The code base is available on the [[https://github.com/orgs/passage-org/reposito
 free to post issues, or to ask questions there. Among others, the
 possible contributions that would be greatly appreciated are:
 
-- [[file:doc/passage-backends.org::#contributing][Additional support for backends]];
+- [[file:./doc/passage-backends.org::#contributing][Additional support for backends]];
 - [[file:doc/passage-engine.org::#contributing][Additional support for SPARQL operators]];
 - [[file:doc/passage-clients.org::#contributing][Additional support for Smart Clients]].
 

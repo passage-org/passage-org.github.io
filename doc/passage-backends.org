@@ -36,14 +36,14 @@ data. This becomes crucial when the dataset comprises billions of
 triples/quads that could take days to ingest.
 
 The same {{{PASSAGE}}} Java engine supports any backend, granted the
-latter implements our provided interface.
-
+latter implements our provided interfaces.
 
 * Blazegraph
 
-With our first release, we focused on [[https://blazegraph.com/][Blazegraph]]. Despite its
-terminated support, it presents a unique feature that we can take
-advantage of, to pause and continue query executions:
+With our first release, we focused on [[https://blazegraph.com/][Blazegraph]]
+[cite:@blazegraph]. Despite its terminated support, it presents a
+unique feature that we can take advantage of, to pause and continue
+query executions:
 
 It uses an *augmented* balanced tree for each index, i.e., a counter
 is associated with each tree node that allows {{{PASSAGE}}} to
@@ -60,6 +60,15 @@ compared to the number of elements matching the pattern.
     ?s ?p ?o               # One triple/quad pattern only
   } OFFSET 10000000        # May need to skip a lot of elements
 #+END_SRC
+#+BEGIN_left-comment
+Which is equivalent to a single triple pattern whose predicate
+is bounded: ~?s rdf:type ?o~. This example shows that simple ~BIND~
+are handled.
+#+END_left-comment
+
+It is important since {{{PASSAGE}}} extensively produces such simple
+subqueries as basis for more complex continuation queries
+[cite:@pham2025passage].
 
 
 * Contributing
@@ -85,18 +94,25 @@ iterator:
   BackendIterator<ID, VALUE, SKIP> search(final ID s, final ID p, final ID o);
 #+END_SRC
 
-Among other, the iterators must provide a skipping mechanism:
+Among other, the iterators should provide a skipping mechanism to
+efficiently compute the simple =OFFSET= subqueries:
 #+BEGIN_SRC java :exports code
   void skip(final SKIP to);
 #+END_SRC
+#+BEGIN_right-comment
+Although highly recommended, implementing a logarithmic ~skip~ is not
+mandatory if the call to ~skip~ is fast enough: One should only make
+sure that the query as enough time to progress over pause/resume cycles.
+#+END_right-comment
 
-*** TODO Tests
+@@html: <br/> @@
 
-*** TODO Benchmarks
+*** Testing
+
+As per usual, the code should be tested. The requirements are not huge
+though. We mostly need backends to output values that they will be
+able to use as input later on.
 
 * References
 
-**** TODO add important references
-
 #+print_bibliography:
-
