@@ -1,6 +1,6 @@
-#+MACRO: PASSAGE PASSAGE
+#+MACRO: PASSAGE Passage
 
-#+TITLE: {{{PASSAGE}}}
+#+TITLE: {{{PASSAGE}}}'s Homepage
 #+DATE: [2025-02-21 Fri]
 #+AUTHOR: chat-wane
 #+EMAIL: grumpy dot chat dot wane at gmail dot com
@@ -10,24 +10,19 @@
 
 #+OPTIONS: toc:nil
 #+OPTIONS: num:nil
-#+OPTIONS: html-postamble:nil # removes the footer
 #+OPTIONS: prop:nil # hide the properties
 
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/font.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/style.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/code.css" />
-#+HTML_HEAD: <script src="../js/network.js" type="text/javascript"></script>
-#+HTML_HEAD: <script src="../js/main.js" type="text/javascript"></script>
-#+HTML_HEAD: <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/font.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/root.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/homepage.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/code.css" />
 
 #+BIBLIOGRAPHY: "../bibliography.bib"
 #+cite_export: csl ../springer-basic-brackets-no-et-al-alphabetical.csl
 
-#+BEGIN_CENTER
-*Smart Clients*
-
-*To Automate Partial Executions until Completion.*
-#+END_CENTER
+#+BEGIN_EXPORT html
+<h1>Smart Clients: Automate Partial Executions until Completion.</h1>
+#+END_EXPORT
 
 
 When a SPARQL query times out, {{{PASSAGE}}} provides partial results
@@ -76,6 +71,19 @@ correct results for SPARQL.
 We still want to push as many operators as possible to the server. It
 improves on query execution times, reduces generated traffic, etc.
 #+END_right-comment
+
+
+#+BEGIN_EXPORT html
+<div class='table-logo-container' style='margin-bottom: -90px'>
+<table class='table-logo'>
+<tbody>
+<tr>
+<td><img class="table-logo" src="/res/comunica.svg" /></td>
+</tr>
+</tbody>
+</table>
+</div>
+#+END_EXPORT 
 
 * Comunica
 

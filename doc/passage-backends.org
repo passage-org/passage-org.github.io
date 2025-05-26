@@ -1,6 +1,6 @@
-#+MACRO: PASSAGE PASSAGE
+#+MACRO: PASSAGE Passage
 
-#+TITLE: {{{PASSAGE}}}
+#+TITLE: {{{PASSAGE}}}'s Homepage
 #+DATE: [2025-02-18 Mar]
 
 #+AUTHOR: chat-wane
@@ -11,24 +11,19 @@
 
 #+OPTIONS: toc:nil
 #+OPTIONS: num:nil
-#+OPTIONS: html-postamble:nil # removes the footer
 #+OPTIONS: prop:nil # hide the properties
 
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/font.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/style.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/code.css" />
-#+HTML_HEAD: <script src="../js/network.js" type="text/javascript"></script>
-#+HTML_HEAD: <script src="../js/main.js" type="text/javascript"></script>
-#+HTML_HEAD: <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/font.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/root.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/homepage.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/code.css" />
 
 #+BIBLIOGRAPHY: ../bibliography.bib
 #+CITE_EXPORT: csl ../springer-basic-brackets-no-et-al-alphabetical.csl
 
-#+BEGIN_CENTER
-*Backends*
-
-*Storing RDF Data, creating Knowledge Graphs.*
-#+END_CENTER
+#+BEGIN_EXPORT html
+<h1>Backends: Storing RDF Data, creating Knowledge Graphs.</h1>
+#+END_EXPORT
 
 With {{{PASSAGE}}}, we want to provide end-users with correct and
 complete results without having to modify the already stored

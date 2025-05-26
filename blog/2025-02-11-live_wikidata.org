@@ -1,6 +1,6 @@
-#+MACRO: PASSAGE PASSAGE
+#+MACRO: PASSAGE Passage
 
-#+TITLE: {{{PASSAGE}}}
+#+TITLE: {{{PASSAGE}}}'s Homepage
 #+DATE: [2025-02-11 Lun]
 #+AUTHOR: chat-wane
 #+EMAIL: grumpy dot chat dot wane at gmail dot com
@@ -11,24 +11,29 @@
 #+OPTIONS: toc:nil
 #+OPTIONS: num:nil
 #+OPTIONS: prop:t
-#+OPTIONS: html-postamble:nil # removes the footer
 
 #+OPTIONS: html-inline-images:t html-image-inline:t
 
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/font.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/style.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/code.css" />
-#+HTML_HEAD: <script src="../js/network.js" type="text/javascript"></script>
-#+HTML_HEAD: <script src="../js/main.js" type="text/javascript"></script>
-#+HTML_HEAD: <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/font.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/root.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/homepage.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/code.css" />
 
-#+BEGIN_CENTER
-*¡Live Wikidata!*
+#+BEGIN_EXPORT html
+<div class="table-logo-container">
+<table class="table-logo">
+<tr>
+<td>
+<img class="table-logo" src="/res/wikidata.svg" />
+</td>
+</tr>
+</table>
+</div>
+#+END_EXPORT
 
-*Correct and Complete Results for Everyone*
-#+END_CENTER
-
-
+#+BEGIN_EXPORT html
+<h1>¡Live Wikidata: Correct and Complete Results for Everyone!</h1>
+#+END_EXPORT
 
 Wikidata is a notorious knowledge graph available for everyone. It
 stores tens of billions of statements, directly accessible using

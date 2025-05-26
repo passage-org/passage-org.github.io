@@ -1,36 +1,59 @@
 
-/* https://www.nordtheme.com/docs/colors-and-palettes */
-:root {        
-    --nord0:  #2e3440; --nord1:  #3b4252; --nord2:  #434c5e; --nord3:  #4c566a; /* polar night */
-    --nord6:  #eceff4; --nord5:  #e5e9f0; --nord4:  #d8dee9; /* snow storm */
-    --nord7:  #8fbcbb; --nord8:  #88c0d0; --nord9:  #81a1c1; --nord10: #5e81ac; /* frost */
-    --nord11: #bf616a; --nord12: #d08770; --nord13: #ebcb8b; --nord14: #a3be8c; --nord15: #b48ead; /* aurora */
-
-    color-scheme: light dark; /* need this to be enabled */
-    --background-color: light-dark(white, var(--nord0));
-    --text-header-color: light-dark(var(--nord0), white);
-    --text-subheader-color: light-dark(var(--nord3), var(--nord6));
-    --text-color: light-dark(var(--nord3), var(--nord5));
-    --text-faded-color: light-dark(var(--nord5), var(--nord1));
-    
-    --left-margin: 58px; /*value left for the navigation bar*/
-    --comment-width: 200px;
-    --font-name: "Roboto";
-    --font-size: large;
-    --code-font-name: "Courier New";
-    --code-font-size: medium;
+.table-logo-container {
+    display: flex;
+    justify-content: center; /* horizontal */
+    margin: 40px;
 }
+
+.table-logo {
+    width: calc(2*var(--logo-cell-width));
+    /* border: 1px solid var(--border-color);*/
+}
+
+.background-lettrine {
+    /* background-color: var(--logo-color); */
+    color: var(--text-color);
+    fill : var(--text-color);
+    width: var(--logo-cell-width);
+    padding: 0px;
+}
+
+.background-pas {
+    /* background-color: var(--inverted-logo-color); */
+    color: var(--text-color);
+    width: var(--logo-cell-width);
+    height: var(--logo-cell-height);
+    font-size: var(--logo-base-font-size);
+    line-height: 0.65;
+
+}
+
+.background-sage {
+    /* background-color: var(--inverted-logo-color); */
+    color: var(--text-color);
+    width: var(--logo-cell-width);
+    height: var(--logo-cell-height);
+    font-size: calc(0.5*var(--logo-base-font-size));
+    height: 34px;
+    line-height: 0.9;
+}
+
+.background-underline {
+    /* background-color: var(--inverted-logo-color);*/
+    color: var(--text-color);
+    width: var(--logo-cell-width);
+    font-size: calc(0.5*var(--logo-base-font-size));
+    line-height: 0.65;
+    margin: auto;
+    text-align: right;
+}
+
 
 
 
-#art {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: -1;
+.title { /* org's default shows a big <h1> title that we don't want */
+    display: none;
 }
-
-
 
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
     margin:0;
@@ -41,46 +64,40 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,
 body {
     background-color: var(--background-color);
     color: var(--text-color);
-    font-family: var(--font-name);
-    font-size: var(--font-size);
+    font-family: var(--base-font-family);
+    font-size: var(--base-font-size);
     counter-reset: section;
 }
 
-#navi{
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    z-index: 1;
-}
-
 a:link {
-    color: var(--nord10);
+    color: var(--frost-4);
 }
 a:hover {
     text-decoration: underline;
 }
 a:visited {
-    color: var(--nord15);
+    color: var(--aurora-5);
 }
 
-#content, #postamble {
+#content {
     width: 720px;
-    padding-left: calc(+1px + var(--left-margin));
-    margin:auto;
-}
-
-#postamble {
-    margin-top: 64px;
 }
 
 .outline-text-2, .outline-text-3 {
     position: relative;
 }
 
-img {
-    width: 100%;
-    position: relative; /* TODO: this should only work for plots */
-    left: calc(0px - 1em);  /* Shift so the origin is without the ylabel */
+
+#postamble {
+    margin-top: 64px;
+    display: flex;
+    justify-content: center; /* horizontal */
+}
+
+.content p > img { /* TODO: this should only work for plots */
+    width: calc(100% + 2.66em);
+    position: relative; 
+    left: calc(0px - 2.66em);  /* Shift so the origin is without the ylabel */
 }
 
 .figure {
@@ -104,7 +121,7 @@ img {
     border-left: 1px dotted var(--text-color);
     padding-left: 8px;
     transform: translateY(-50%); /* center based on its content */
-    font-family: var(--font-name), monospace;
+    font-family: var(--base-font-family), monospace;
     font-size: smaller;
 }
 
@@ -126,7 +143,7 @@ img {
     border-right: 1px dotted var(--text-color);
     padding-right: 8px;
     transform: translateY(-50%); /* center based on its content */
-    font-family: var(--font-name), monospace;
+    font-family: var(--base-font-family), monospace;
     font-size: smaller;
     text-align: end;
 }
@@ -136,47 +153,6 @@ img {
 }
 
 
-
-nav {
-    top: calc(-1*var(--left-margin));
-    left: 0px;
-    padding-bottom: 15px;
-    padding-top: 15px;
-    position: fixed;
-    background-color: var(--background-color);
-    transform-origin: bottom left;
-    transform: rotate(90deg);
-    font-family: var(--code-font-name), Courier, monospace;
-    font-size: 20px;
-    z-index: 1;
-    overflow-wrap: break-word;
-}
-
-nav a {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-nav a:link {
-    color: var(--text-color);
-    text-decoration: none;
-}
-nav a:visited {
-    color: var(--text-color);
-    text-decoration: none;
-}
-nav a:hover {
-    color: var(--text-color);
-    text-decoration: underline;
-}
-
-#vertical {
-    position:fixed;
-    height:100%;
-    width:1px;
-    background-color: var(--text-color);
-    left: var(--left-margin);
-    z-index: 1;
-}
 
 h2::before {
     content: "Section " counter(section, upper-roman);
@@ -190,11 +166,13 @@ h2::before {
 
 h1, h2 {
     color: var(--text-header-color);
-    padding-top: 64px;
     margin-bottom: 16px;
 }
+
+h1 {padding-top: 10px;}
     
 h2 {
+    padding-top: 64px;
     counter-reset: subsection;
     text-transform: uppercase;
 }
@@ -260,7 +238,7 @@ p {
     position: absolute;
     font-size: 20px;
     font-weight: bold;
-    color: var(--nord15);
+    color: var(--aurora-5);
 }
 
 .content-dove::before, .content-dove::after { content: "\f4ba"; }
@@ -279,7 +257,7 @@ p {
 }
 
 .feature_cards dt i {
-    color: var(--nord15);
+    color: var(--aurora-5);
     position: relative;
     top: 2px;
     left: 2px;
@@ -300,21 +278,21 @@ p {
     background-color: var(--background-color);
 }
 .tag span {
-    background-color: light-dark(var(--nord6), var(--nord1));
+    background-color: light-dark(var(--snow-storm-3), var(--polar-night-2));
 }
 
 .tag span.WIP {
-    background-color: var(--nord11);
+    background-color: var(--aurora-1);
     color: white;
 }
 
 .tag span.release {
-    background-color: var(--nord14);
+    background-color: var(--aurora-4);
     color: white;
 }
 
 .tag span.announce {
-    background-color: var(--nord13);
+    background-color: var(--aurora-3);
     color: white;
 }
 
@@ -322,4 +300,15 @@ p {
 
 table {
     width: 100%;
+}
+
+.outline-2 tbody>tr:first-child {
+    background-color: var(--header-background-color);
+    font-weight: bold;
+    text-decoration: underline dotted;
+
+}
+
+.outline-2 tbody {
+    border: 1px solid var(--header-background-color);
 }

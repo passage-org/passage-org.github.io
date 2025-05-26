@@ -22,11 +22,24 @@ take a look at <https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial
 #+END_COMMENT
 
 #+BEGIN_SRC emacs-lisp :results silent
+  (setq system-time-locale "C") ;; set locale "en"
+  (setq navbar
+      (with-temp-buffer
+        (insert-file-contents "./navbar.html")
+        (buffer-string)))
+  (setq copyrights
+    (with-temp-buffer
+      (insert-file-contents "./copyrights.html")
+      (buffer-string)))
+
+
   (setq org-publish-project-alist
-        '(("org-passage"
+        `(("org-passage"
            :base-directory "./"
            :publishing-directory "./public_html/"
            :exclude "^public-html/.*"
+           :html-preamble ,navbar
+           :html-postamble ,copyrights
            :base-extension "org"
            :recursive t
            :with-macros t 
@@ -47,9 +60,9 @@ take a look at <https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial
            :publishing-function org-publish-attachment)
           ("figure-static"
            :base-directory "./"
-           :base-extension "svg"
+           :base-extension "svg\\|ico"
            :publishing-directory "./public_html/"
-           :include ("./blog/ingestion.svg")
+           :include ("./blog/ingestion.svg" "./res/passage.svg" "./res/wikidata.svg" "./res/comunica.svg")
            :publishing-function org-publish-attachment)
           
         ("full-passage" :components ("org-passage" "js-static" "css-static" "figure-static"))))

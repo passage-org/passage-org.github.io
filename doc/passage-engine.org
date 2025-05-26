@@ -1,6 +1,6 @@
-#+MACRO: PASSAGE PASSAGE
+#+MACRO: PASSAGE Passage
 
-#+TITLE: {{{PASSAGE}}}
+#+TITLE: {{{PASSAGE}}}'s Homepage
 #+DATE: [2025-02-18 Mar]
 #+AUTHOR: chat-wane
 #+EMAIL: grumpy dot chat dot wane at gmail dot com
@@ -11,23 +11,18 @@
 #+OPTIONS: toc:nil
 #+OPTIONS: num:nil
 #+OPTIONS: prop:nil # hide properties
-#+OPTIONS: html-postamble:nil # removes the footer
 
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/font.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/style.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/code.css" />
-#+HTML_HEAD: <script src="../js/network.js" type="text/javascript"></script>
-#+HTML_HEAD: <script src="../js/main.js" type="text/javascript"></script>
-#+HTML_HEAD: <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/font.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/root.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/homepage.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/code.css" />
 
 #+BIBLIOGRAPHY: "../bibliography.bib"
 #+cite_export: csl ../springer-basic-brackets-no-et-al-alphabetical.csl
 
-#+BEGIN_CENTER
-*Engine*
-
-*SPARQL query execution with continuations.*
-#+END_CENTER
+#+BEGIN_EXPORT html
+<h1>Engine: SPARQL query execution with continuations.</h1>
+#+END_EXPORT
 
 
 First and foremost, {{{PASSAGE}}} is a regular SPARQL query engine. It
@@ -39,9 +34,9 @@ query execution if it has been stopped.
 
 However, contrarily to other SPARQL engines, {{{PASSAGE}}} does not
 simply abort its query execution when it reaches its timeout
-threshold: It returns the partial results of the executed query, with
+threshold: It returns the partial results of the executed query, *along with*
 a continuation query that allows for retrieving the missing results if
-any.
+any [cite:@pham2025passage].
 
 Enabling pausing at any time requires the use of specific
 physical operators.  Physical operators that do not require a large
@@ -53,7 +48,7 @@ the offset where it paused.
 * Core SPARQL
 
 For the first release, we focused on a subset of SPARQL operators
-called core SPARQL [3], comprising triple/quad patterns, basic graph
+called core SPARQL [cite:@perez2009semantics], comprising triple/quad patterns, basic graph
 patterns, joins, unions, filters, and optionals.
 
 #+NAME: supported-operators
@@ -61,9 +56,9 @@ patterns, joins, unions, filters, and optionals.
 echo "\
   Operator,     Support,    Comment
   tp/qp   ,     =0.0.1=,
-  Join    ,     =0.0.1=,
+  Join    ,     =0.0.1=,    Nested loop join and mapping at a time.
   BGP     ,     =0.0.1=,    BGPs are transformed in a series of joined tp/qp.
-  Union   ,     =0.0.1=,
+  Union   ,     =0.0.1=,    
   Values  ,     =0.0.1=,
   Filter  ,     =0.0.1=, "
 #+END_SRC
@@ -83,9 +78,6 @@ echo "\
 | Union    | =0.0.1= |                                                   |
 | Values   | =0.0.1= |                                                   |
 | Filter   | =0.0.1= |                                                   |
-
-
-*** TODO css for tables.
 
 * Contributing
 :PROPERTIES:
