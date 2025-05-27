@@ -130,7 +130,7 @@ The code base is available on the [[https://github.com/orgs/passage-org/reposito
 free to post issues, or to ask questions there. Among others, the
 possible contributions that would be greatly appreciated are:
 [[file:doc/passage-backends.org::#contributing][additional support for backends]]; [[file:doc/passage-engine.org::#contributing][additional support for SPARQL
-operators]]; and [[file:doc/passage-clients.org::#contributing][additional support for Smart Clients]].
+operators]]; and [[file:doc/passage-clients.org::#contributing][additional support for smart clients]].
 
 * References
 

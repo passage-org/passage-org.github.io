@@ -1,4 +1,5 @@
 
+
 .table-logo-container {
     display: flex;
     justify-content: center; /* horizontal */
@@ -81,6 +82,12 @@ a:visited {
 
 #content {
     width: 720px;
+}
+
+@media (max-width: 720px) {
+    #content {
+        width: 100%;
+    }
 }
 
 .outline-text-2, .outline-text-3 {
