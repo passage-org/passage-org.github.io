@@ -1,74 +1,22 @@
-* PASSAGE
+* Passage
 
-This project aims at deploying a front page for PASSAGE, where our
-goals are clearly stated.
-
-The website is static, we use [[https://orgmode.org][org-mode]] to generate it. It is
-complemented by css and javascript, when needed.
+This project aims at deploying a front page for Passage, where our
+goals are clearly stated. The website is static, we use [[https://orgmode.org][org-mode]] to
+generate it. It is complemented by css and javascript, when needed.
 
 #+BEGIN_COMMENT
 Github action to deploy it automatically on push:
 https://github.com/marketplace/actions/org-knit
 #+END_COMMENT
 
-These pages are also meant to be the READMEs of their corresponding
+These pages could also meant to be the READMEs of their corresponding
 GitHub project.
 
 
 ** Publishing
 
-#+BEGIN_COMMENT
-take a look at <https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html>
-#+END_COMMENT
-
 #+BEGIN_SRC emacs-lisp :results silent
-  (setq system-time-locale "C") ;; set locale "en"
-  (setq navbar
-      (with-temp-buffer
-        (insert-file-contents "./navbar.html")
-        (buffer-string)))
-  (setq copyrights
-    (with-temp-buffer
-      (insert-file-contents "./copyrights.html")
-      (buffer-string)))
-
-
-  (setq org-publish-project-alist
-        `(("org-passage"
-           :base-directory "./"
-           :publishing-directory "./public_html/"
-           :exclude "^public-html/.*"
-           :html-preamble ,navbar
-           :html-postamble ,copyrights
-           :base-extension "org"
-           :recursive t
-           :with-macros t 
-           :publishing-function org-html-publish-to-html)
-          ("js-static"
-           :base-directory "./js"
-           :base-extension "js"
-           :publishing-directory "./public_html/js"
-           :exclude "^public-html/.*"
-           :recursive t
-           :publishing-function org-publish-attachment)
-          ("css-static"
-           :base-directory "./css"
-           :base-extension "ttf\\|woff2\\|svg\\|css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-           :publishing-directory "./public_html/css"
-           :exclude "^public-html/.*"
-           :recursive t
-           :publishing-function org-publish-attachment)
-          ("figure-static"
-           :base-directory "./"
-           :base-extension "svg\\|ico"
-           :publishing-directory "./public_html/"
-           :include ("./blog/ingestion.svg" "./res/passage.svg" "./res/wikidata.svg" "./res/comunica.svg")
-           :publishing-function org-publish-attachment)
-          
-        ("full-passage" :components ("org-passage" "js-static" "css-static" "figure-static"))))
-
-  (delete-directory "./public_html" t)
-  (org-publish-project "full-passage" t)
-  (copy-directory "./node_modules" "./public_html/node_modules")
+  ;; cf. <https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html>
+  (load-file "./deploy.el") ;; everything for deployment is within this file
 #+END_SRC
 

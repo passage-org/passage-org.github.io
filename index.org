@@ -129,10 +129,8 @@ optionally [[file:doc/passage-clients.org][smart clients]]./ <2025-02-18 Mar>
 The code base is available on the [[https://github.com/orgs/passage-org/repositories][{{{GITHUB}}} GitHub platform]]. Feel
 free to post issues, or to ask questions there. Among others, the
 possible contributions that would be greatly appreciated are:
-
-- [[file:./doc/passage-backends.org::#contributing][Additional support for backends]];
-- [[file:doc/passage-engine.org::#contributing][Additional support for SPARQL operators]];
-- [[file:doc/passage-clients.org::#contributing][Additional support for Smart Clients]].
+[[file:doc/passage-backends.org::#contributing][additional support for backends]]; [[file:doc/passage-engine.org::#contributing][additional support for SPARQL
+operators]]; and [[file:doc/passage-clients.org::#contributing][additional support for Smart Clients]].
 
 * References
 

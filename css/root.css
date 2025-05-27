@@ -98,13 +98,13 @@
 }
 
 .header_button:visited { color: var(--text-color); }
-
-.underlined { text-decoration: underline dotted !important; }
-
+.header_button:link { color: var(--text-color); }
 .header_button:hover {
     background-color: var(--logo-color);
     color: var(--snow-storm-3);
 }
+
+.underlined { text-decoration: underline dotted !important; }
 
 .dropdown {
     position: relative;

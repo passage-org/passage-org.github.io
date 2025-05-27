@@ -1,0 +1,28 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write 
+      
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install emacs for org-mode
+        run:  sudo apt-get update && sudo apt-get install -y emacs
+        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Export from org-mode to html
+        run:  emacs --batch -l deploy.el
+        
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: public_html # output folder
