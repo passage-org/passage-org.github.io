@@ -1,0 +1,314 @@
+
+.table-logo-container {
+    display: flex;
+    justify-content: center; /* horizontal */
+    margin: 40px;
+}
+
+.table-logo {
+    width: calc(2*var(--logo-cell-width));
+    /* border: 1px solid var(--border-color);*/
+}
+
+.background-lettrine {
+    /* background-color: var(--logo-color); */
+    color: var(--text-color);
+    fill : var(--text-color);
+    width: var(--logo-cell-width);
+    padding: 0px;
+}
+
+.background-pas {
+    /* background-color: var(--inverted-logo-color); */
+    color: var(--text-color);
+    width: var(--logo-cell-width);
+    height: var(--logo-cell-height);
+    font-size: var(--logo-base-font-size);
+    line-height: 0.65;
+
+}
+
+.background-sage {
+    /* background-color: var(--inverted-logo-color); */
+    color: var(--text-color);
+    width: var(--logo-cell-width);
+    height: var(--logo-cell-height);
+    font-size: calc(0.5*var(--logo-base-font-size));
+    height: 34px;
+    line-height: 0.9;
+}
+
+.background-underline {
+    /* background-color: var(--inverted-logo-color);*/
+    color: var(--text-color);
+    width: var(--logo-cell-width);
+    font-size: calc(0.5*var(--logo-base-font-size));
+    line-height: 0.65;
+    margin: auto;
+    text-align: right;
+}
+
+
+
+
+.title { /* org's default shows a big <h1> title that we don't want */
+    display: none;
+}
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
+    margin:0;
+    padding:0;
+    position:relative;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--base-font-family);
+    font-size: var(--base-font-size);
+    counter-reset: section;
+}
+
+a:link {
+    color: var(--frost-4);
+}
+a:hover {
+    text-decoration: underline;
+}
+a:visited {
+    color: var(--aurora-5);
+}
+
+#content {
+    width: 720px;
+}
+
+.outline-text-2, .outline-text-3 {
+    position: relative;
+}
+
+
+#postamble {
+    margin-top: 64px;
+    display: flex;
+    justify-content: center; /* horizontal */
+}
+
+.content p > img { /* TODO: this should only work for plots */
+    width: calc(100% + 2.66em);
+    position: relative; 
+    left: calc(0px - 2.66em);  /* Shift so the origin is without the ylabel */
+}
+
+.figure {
+    padding: 0;
+}
+
+
+
+.right-comment { position: relative; }
+
+.right-comment p {
+    position: absolute;
+    width: var(--comment-width);
+    left: calc(5px + 100%); /* slightly lefter than main text */
+    color: var(--text-faded-color);
+    background-color: var(--background-color);
+    border: none;
+    box-shadow: none;
+    /*bottom: calc(24px + 100%); /* 8+16 margin h2 + p */
+    bottom: parent;
+    border-left: 1px dotted var(--text-color);
+    padding-left: 8px;
+    transform: translateY(-50%); /* center based on its content */
+    font-family: var(--base-font-family), monospace;
+    font-size: smaller;
+}
+
+.right-comment p:hover {
+    color: var(--text-color);
+}
+
+.left-comment { position: relative; }
+
+.left-comment p {
+    position: absolute;
+    width: var(--comment-width);
+    left: calc(-1 * var(--comment-width) - 23px); /* same than right-comment but left */
+    color: var(--text-faded-color);
+    background-color: var(--background-color);
+    border: none;
+    box-shadow: none;
+    bottom: parent;
+    border-right: 1px dotted var(--text-color);
+    padding-right: 8px;
+    transform: translateY(-50%); /* center based on its content */
+    font-family: var(--base-font-family), monospace;
+    font-size: smaller;
+    text-align: end;
+}
+
+.left-comment p:hover {
+    color: var(--text-color);
+}
+
+
+
+h2::before {
+    content: "Section " counter(section, upper-roman);
+    counter-increment: section;
+    color: var(--text-faded-color);
+    margin-right: 8px;
+    position: relative;
+    float: right;
+    left: -100%;
+}
+
+h1, h2 {
+    color: var(--text-header-color);
+    margin-bottom: 16px;
+}
+
+h1 {padding-top: 10px;}
+    
+h2 {
+    padding-top: 64px;
+    counter-reset: subsection;
+    text-transform: uppercase;
+}
+
+h3::before {
+    content: counter(section, upper-roman) "." counter(subsection);
+    counter-increment: subsection;
+    text-transform: uppercase;
+    color: var(--text-faded-color);
+    margin-right: 8px;
+    position: relative;
+    float: right;
+    left: -100%;
+}
+
+h3 {
+    color: var(--text-subheader-color);
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+/* no h4, h5 */
+
+p {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); box-shadow: 6px 8px 20px rgba(0,0,0,0.3);}
+    100% { transform: translateY(0); }
+}
+
+.feature_cards {
+    background-color: var(--background-color);
+    width: 31%;
+    display:inline-block;
+    text-align:center;
+    border: solid 1px;
+    border-radius: 5px;
+    border-color: var(--text-subheader-color);
+    min-height: 260px;
+    padding: 5px;
+    vertical-align: top;
+    animation: float 10s ease-in-out infinite;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.feature_cards:nth-of-type(3n+1) {animation-delay: -3s}
+.feature_cards:nth-of-type(3n+2) {animation-delay: -2s}
+.feature_cards:nth-of-type(3n+3) {animation-delay: -1s}
+
+.feature_cards:hover {
+    animation-play-state: paused;
+}
+
+.feature_cards::before,
+.feature_cards::after {
+    font-family: "Font Awesome 5 Free"; /* Font Awesome font-family */
+    position: absolute;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--aurora-5);
+}
+
+.content-dove::before, .content-dove::after { content: "\f4ba"; }
+.content-paw::before, .content-paw::after { content: "\f1b0"; }
+.content-horse-head::before, .content-horse-head::after { content: "\f7ab"; }
+    
+.feature_cards::before {
+    top: 10px;
+    left: 10px;
+}
+
+.feature_cards::after {
+    bottom: 10px;
+    right: 10px;
+    transform: rotate(180deg);
+}
+
+.feature_cards dt i {
+    color: var(--aurora-5);
+    position: relative;
+    top: 2px;
+    left: 2px;
+}
+
+.feature_cards dd {
+    border-top: solid 1px;
+    border-color: var(--text-faded-color);
+    padding-top: 5px;
+    margin-top: 5px;
+    height:100%;
+    
+}
+
+
+
+.tag {
+    background-color: var(--background-color);
+}
+.tag span {
+    background-color: light-dark(var(--snow-storm-3), var(--polar-night-2));
+}
+
+.tag span.WIP {
+    background-color: var(--aurora-1);
+    color: white;
+}
+
+.tag span.release {
+    background-color: var(--aurora-4);
+    color: white;
+}
+
+.tag span.announce {
+    background-color: var(--aurora-3);
+    color: white;
+}
+
+
+
+table {
+    width: 100%;
+}
+
+.outline-2 tbody>tr:first-child {
+    background-color: var(--header-background-color);
+    font-weight: bold;
+    text-decoration: underline dotted;
+
+}
+
+.outline-2 tbody {
+    border: 1px solid var(--header-background-color);
+}

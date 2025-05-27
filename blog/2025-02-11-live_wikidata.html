@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2025-05-27 Tue 08:50 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Passage's Homepage</title>
+<meta name="author" content="chat-wane" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="/css/font.css" />
+<link rel="stylesheet" type="text/css" href="/css/root.css" />
+<link rel="stylesheet" type="text/css" href="/css/homepage.css" />
+<link rel="stylesheet" type="text/css" href="/css/code.css" />
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="header-bar">
+  <ul class='navigation-bar'>
+    <li><a class="logo" href="/"><img src="/res/passage.svg" title="passage" width="40px"/></a></li>
+    <li><a class="header_button underlined" href="https://passage-org.github.io/passage-comunica/" title="try passage x comunica">Try it!</a></li>
+
+    <li style="float:right">
+      <span class="github">
+        <a href="https://github.com/passage-org" title="GitHub of passage-org">
+          <!-- comes from : https://github.com/logos -->
+          <svg class="logo_github" viewBox="0 0 98 96" width="30" height="30" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/></svg>
+        </a>
+      </span>
+    </li>
+    
+    <li style="float:right">
+      <input id="dark-light-toggle" name="dark-light-toggle" style="display:none" type="checkbox" />
+      <a href="#" onclick="document.getElementById('dark-light-toggle').checked = !document.getElementById('dark-light-toggle').checked" class="about" title="Toggle dark/light mode">
+        <!-- comes from https://www.svgrepo.com/svg/362877/moon-bold licensed MIT, from phosphor-->
+        <svg class="logo_about" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+          <g><path d="M228.13086,149.11719A12.00407,12.00407,0,0,0,213.168,141.165,80.03157,80.03157,0,0,1,114.85742,42.75,12.00191,12.00191,0,0,0,99.939,27.833,104.01378,104.01378,0,1,0,228.18555,155.99512,12.00185,12.00185,0,0,0,228.13086,149.11719ZM128,208A80.01075,80.01075,0,0,1,88.14551,58.61719a103.98165,103.98165,0,0,0,109.2373,109.2373A80.31015,80.31015,0,0,1,128,208Z"></path></g>
+        </svg>
+      </a>
+    </li>
+    
+  </ul>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">Passage's Homepage</h1>
+<div class="table-logo-container">
+<table class="table-logo">
+<tr>
+<td>
+<img class="table-logo" src="/res/wikidata.svg" />
+</td>
+</tr>
+</table>
+</div>
+
+<h1>¡Live Wikidata: Correct and Complete Results for Everyone!</h1>
+
+<p>
+Wikidata is a notorious knowledge graph available for everyone. It
+stores tens of billions of statements, directly accessible using
+SPARQL queries through the web. However, to enforce its fair use
+policies, Wikidata sets a 60-seconds timeout on query execution. Once
+this threshold is reached, the query execution is aborted, providing
+no results to its end-user. 
+</p>
+
+<p>
+To alleviate this issue, end-users must either manipulate the query to
+make it more efficient; or download the dump themselves to run it
+without limitations.
+</p>
+
+<p>
+We argue that end-users can get complete and correct results if SPARQL
+query engines enable continuation queries, i.e., queries that allow
+retrieving the missing results when the computation is stopped before
+completion.
+</p>
+
+
+<div id="outline-container-org0c2782d" class="outline-2">
+<h2 id="org0c2782d">Downloading</h2>
+<div class="outline-text-2" id="text-org0c2782d">
+<p>
+The first step to create a live Wikidata SPARQL endpoint is to
+retrieve the data. Since Passage supports Blazegraph, which is
+the engine and data structure that Wikidata relies on, retrieving the
+<code>.jnl</code> file would suffice. However, these files are huge and not
+publicly available, so we download their dump instead:
+</p>
+<div class="right-comment" id="org5bc3614">
+<p>
+While creating our first journal file is time consumming, later
+replication will be easier.
+</p>
+
+</div>
+<div class="left-comment" id="org502dbed">
+<p>
+We use <code>axel</code> to speed up the download, and provide error management.
+</p>
+
+</div>
+
+<div class="org-src-container">
+<pre class="src src-bash">axel -a -n 10 --verbose <span class="org-sh-escaped-newline">\</span>
+     http://dumps.wikimedia.your.org/wikidatawiki/entities/latest-all.ttl.gz
+</pre>
+</div>
+
+<pre class="example" id="orga63777c">
+Downloaded 109.696 Gigabyte(s) in 1:57:53 hour(s). (16261.77 KB/s)
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-org82cbfda" class="outline-2">
+<h2 id="org82cbfda">Ingesting</h2>
+<div class="outline-text-2" id="text-org82cbfda">
+<p>
+Once the compressed turtle file containing all Wikidata's data is
+downloaded, we must ingest it into our database, which is Blazegraph,
+as we want to remain close to the original endpoints.
+</p>
+</div>
+
+
+<div id="outline-container-org04eceaa" class="outline-3">
+<h3 id="org04eceaa">Issues</h3>
+<div class="outline-text-3" id="text-org04eceaa">
+<p>
+Despite being impressive in many aspects, Blazegraph's official
+support has been abandonned years ago. Wikimedia had to manage their
+own version of Blazegraph.
+</p>
+<div class="right-comment" id="orgc0b4138">
+<p>
+Until the team finds a suitable replacement to Blazegraph, that is.
+</p>
+
+</div>
+
+<p>
+To remain the closest to Wikipedia's database, we use their provided
+tools to ingest the data. We favor an approach based on the
+<a href="https://github.com/blazegraph/database/wiki/Bulk_Data_load">CLI</a>. Although it cannot benefit from the ingestion of multiple files
+at a time, it is easily monitorable, and feels more reliable.
+</p>
+<div class="left-comment" id="org9207e9a">
+<p>
+Only one process has locked read/write access to the <code>.jnl</code> file.
+</p>
+
+</div>
+
+<p>
+However, we had trouble compiling the tools: Lombok was not properly
+generating constructors; and the Scala compiler dependency threw
+unintelligible errors. So instead, we used <a href="https://archiva.wikimedia.org/repository/releases/org/wikidata/query/rdf/tools/0.3.154"><code>munge.sh</code></a> provided online;
+and restricted our goal to create a self-contained <code>blazegraph.jar</code>
+that contains Wikidata's home-made vocabulary.
+</p>
+<ul class="org-ul">
+<li>We added a shade target so <code>DataLoader</code> is part of the exported jar;</li>
+<li>We added the dependency to <code>log4j 1.2.17</code> which the old <code>DataLoader</code> depends on.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org12e7591" class="outline-3">
+<h3 id="org12e7591">Comments</h3>
+<div class="outline-text-3" id="text-org12e7591">
+<p>
+Wikimedia recommends to <code>munge.sh</code> the compressed turtle file. From the
+original file, it creates a large number of compressed turtle files:
+</p>
+<div class="right-comment" id="org1e50343">
+<p>
+The original file still exists. So if you fall short of 100GB,
+remember to clean it.
+</p>
+
+</div>
+<div class="org-src-container">
+<pre class="src src-bash">./munge.sh -c 50000 <span class="org-sh-escaped-newline">\</span>
+           -f /DATA/datasets/latest-all.ttl.gz <span class="org-sh-escaped-newline">\</span>
+           -d /DATA/datasets/wikidata-munged/
+</pre>
+</div>
+
+<pre class="example" id="org98dd74a">
+…
+04:22:45.108 … - Processed 102100000 entities at (2899, 2652, 2354)
+04:22:45.108 … - Switching to /DATA/datasets/wikidata-munged//wikidump-000002043.ttl.gz
+04:22:47.697 … - Processed 102110000 entities at (2979, 2672, 2363)
+04:22:50.619 … - Processed 102120000 entities at (2979, 2672, 2363)
+04:22:54.360 … - Processed 102130000 entities at (3022, 2686, 2369)
+04:22:57.630 … - Processed 102140000 entities at (2989, 2685, 2371)
+04:23:00.375 … - Processed 102150000 entities at (2989, 2685, 2371)
+04:23:00.376 … - Switching to /DATA/datasets/wikidata-munged//wikidump-000002044.ttl.gz
+04:23:02.485 … - Processed 102160000 entities at (3036, 2700, 2377)
+</pre>
+
+<p>
+It creates 2044 files formated as <code>wikidump-000000001.ttl.gz</code>. To plan
+the ingestion of all these files, we checked the idempotency of the
+operation, i.e., ingesting a statement multiple times has no more
+effect that ingesting it once. Thus, the ingestion can be paused and
+resumed easily, if needed.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgee71f1a" class="outline-3">
+<h3 id="orgee71f1a">Timelapse</h3>
+<div class="outline-text-3" id="text-orgee71f1a">
+<p>
+Finally, we can start the sequential ingestion of the 100GB of
+downloaded data. The following scripts run the ingester for each file
+in the targeted <code>$SOURCE_FOLDER</code>. <code>FROM_FILE</code> and <code>TO_FILE</code> allow
+resuming the ingestion if needed. <a href="https://github.com/wikimedia/wikidata-query-rdf/archive/refs/tags/query-service-parent-0.3.154.zip"><code>RWStore.properties</code></a> is the property
+file defining Blazegraph's engine and storage. To keep the log of the
+operation, we redirect every output towards <code>ingestion_log.dat</code>. We
+allocate <code>-Xmx32G</code> of memory to the JVM, although it does not seem to
+require more than 10GB.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span class="org-variable-name">SOURCE_FOLDER</span>=<span class="org-string">"/DATA/datasets/wikidata-munged"</span>
+<span class="org-variable-name">FROM_FILE</span>=<span class="org-string">"/DATA/datasets/wikidata-munged/wikidump-000000257.ttl.gz"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">included</span>
+<span class="org-variable-name">TO_FILE</span>=<span class="org-string">"/DATA/datasets/wikidata-munged/wikidump-000003000.ttl.gz"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">excluded</span>
+
+<span class="org-keyword">for</span> file<span class="org-keyword"> in</span> <span class="org-string">"$SOURCE_FOLDER"</span>/*.ttl.gz; <span class="org-keyword">do</span>
+    <span class="org-keyword">if</span> ([[ <span class="org-string">"$file"</span> &gt; <span class="org-string">"$FROM_FILE"</span> ]] || [[ <span class="org-string">"$file"</span> == <span class="org-string">"$FROM_FILE"</span> ]]) &amp;&amp; [[ <span class="org-string">"$file"</span> &lt; <span class="org-string">"$TO_FILE"</span> ]]; <span class="org-keyword">then</span>
+      java -Xmx32g -cp blazegraph-0.3.154-shaded.jar com.bigdata.rdf.store.DataLoader RWStore.properties <span class="org-string">"$file"</span> &amp;&gt;&gt; ingestion_log.dat
+    <span class="org-keyword">fi</span>
+<span class="org-keyword">done</span>
+</pre>
+</div>
+
+<pre class="example" id="orgd22c143">
+…
+Will load from: /DATA/datasets/wikidata-munged/wikidump-000000589.ttl.gz
+Journal file: wikidata.jnl
+loading: 15264095 stmts added in 1745.302 secs, rate= 8745, commitLatency=0ms, {failSet=0,goodSet=0}
+Load: 15264095 stmts added in 1745.302 secs, rate= 8745, commitLatency=0ms, {failSet=0,goodSet=1}
+Total elapsed=1800641ms
+…
+</pre>
+
+<p>
+<img src="./ingestion.svg " alt="ingestion.svg ">
+Using the output log, we plot the number of statements and ingestion
+time of each compressed turtle file.
+</p>
+
+<p>
+The top figure shows that the number of statements widely differ from
+one file to another, but overall remains constant during the whole
+process.  Put in relation with the bottom figure, a large number of
+statements often means a long ingestion (as expected).
+</p>
+
+<p>
+The bottom figure about ingestion times is more informative: ingestion
+times are increasing over time. We suspect that it comes from the
+underlying balanced tree data structure used by Blazegraph for its
+indexes. Not only the depth of the tree increases, but dichotomic
+searches to find the insertion location take longer and longer.
+</p>
+
+<p>
+Unfortunately, even for us, this is too slow. Resources are largely
+underexploited: CPU usage remains very low, RAM usage is below
+10GB. To avoid opening the journal that now takes 150s, and to
+hopefully get better multithreading capabilities, we load folders of
+100 compressed turtle files.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5d8e643" class="outline-2">
+<h2 id="org5d8e643">Running</h2>
+<div class="outline-text-2" id="text-org5d8e643">
+<p>
+Once the Blazegraph journal exists, we must start the Passage
+service that will accept SPARQL queries, execute them on the journal,
+time out when their execution reaches the 60-seconds threshold, but
+send back a SPARQL continuation query along with its partial results.
+</p>
+
+<p>
+The architecture is basic. End-users connect through a <a href="https://www.glicid.fr/">glicid</a> url;
+where a <a href="https://nginx.org/en/">nginx</a> redirects the request to our virtual machine; where an
+<a href="https://www.haproxy.org/">ha-proxy</a> redirects the request to our SPARQL endpoint in charge of the
+database:
+</p>
+
+<pre class="example" id="org9093a3d">
+               ┌ @https://10-54-2-226.gcp.glicid.fr/
+user 1 &lt;-----&gt; │                  ┌ @http://localhost:8080/
+user 2 &lt;-----&gt; │ ha-proxy &lt;-----&gt; │ passage-server &lt;-&gt; wikidata.jnl
+user 3 &lt;-----&gt; │
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-shell">java -jar passage-server.jar <span class="org-sh-escaped-newline">\</span>
+     -d /DATA/datasets/watdiv10m-blaze/watdiv10M.jnl <span class="org-sh-escaped-newline">\</span>
+     --port 8080 <span class="org-sh-escaped-newline">\</span>
+     --timeout=60000
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-shell">curl -v -X GET --http1.1 -G <span class="org-sh-escaped-newline">\</span>
+     --data-urlencode <span class="org-string">"query=SELECT * WHERE {?s ?p ?o} LIMIT 10"</span> <span class="org-sh-escaped-newline">\</span>
+     <span class="org-string">"https://10-54-2-226.gcp.glicid.fr/watdiv10M.jnl/passage"</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org60ee11e" class="outline-4">
+<h4 id="org60ee11e"><span class="todo TODO">TODO</span> Deploy ha-proxy in front of Passage.</h4>
+</div>
+<div id="outline-container-org2379c41" class="outline-4">
+<h4 id="org2379c41"><span class="todo TODO">TODO</span> Automatic restart when the service is down.</h4>
+</div>
+</div>
+
+<div id="outline-container-orgc2bd75c" class="outline-2">
+<h2 id="orgc2bd75c">Updating</h2>
+<div class="outline-text-2" id="text-orgc2bd75c">
+<p>
+Wikidata's data is constantly evolving. Anyone can add new statements
+to the knowledge graph. Therefore, ingesting a dump is not enough for
+a legit Wikidata mirror. It must be updated regularly to follow the
+changes made by the community.
+</p>
+
+<p>
+Fortunately, Wikidata provides deployers with tools to update their
+database, granted it is a SPARQL endpoint that accepts <code>UPDATE</code>.  Our
+mirror must be able accept the update from, and only from, a Wikidata
+source.
+</p>
+</div>
+
+<div id="outline-container-orgf0543d8" class="outline-4">
+<h4 id="orgf0543d8"><span class="todo TODO">TODO</span> Make the endpoint accept updates.</h4>
+</div>
+</div>
+
+<div id="outline-container-org1c210ab" class="outline-2">
+<h2 id="org1c210ab">References</h2>
+<div class="outline-text-2" id="text-org1c210ab">
+<ul class="org-ul">
+<li><a href="https://addshore.com/2019/10/your-own-wikidata-query-service-with-no-limits/">https://addshore.com/2019/10/your-own-wikidata-query-service-with-no-limits/</a></li>
+<li><a href="https://www.mediawiki.org/wiki/Wikidata_Query_Service/Implementation/Standalone">https://www.mediawiki.org/wiki/Wikidata_Query_Service/Implementation/Standalone</a></li>
+<li><a href="https://github.com/wmde/wikibase-release-pipeline">https://github.com/wmde/wikibase-release-pipeline</a></li>
+<li><a href="https://github.com/wikimedia/wikidata-query-rdf">https://github.com/wikimedia/wikidata-query-rdf</a></li>
+<li><a href="https://wikidataworkshop.github.io/">https://wikidataworkshop.github.io/</a></li>
+<li><a href="https://wiki.bitplan.com/index.php/Get_your_own_copy_of_WikiData">https://wiki.bitplan.com/index.php/Get_your_own_copy_of_WikiData</a></li>
+
+<li>Antoine Willerval, Dennis Diefenbach, and Pierre Maret. <a href="https://wikidataworkshop.github.io/2022/papers/Wikidata_Workshop_2022_paper_2349.pdf">Easily setting up a local Wikidata SPARQL endpoint using the qEndpoint</a>. 2022.</li>
+
+<li>Antoine Willerval, Dennis Diefenbach, and Angela Bonifati. <a href="https://hal.science/hal-04370881/document">qEndpoint: A Wikidata SPARQL endpoint on commodity hardware</a>. 2023.</li>
+
+<li>Wolfgang Fahl, Tim Holzheim, Andrea Westerinen, Christoph Lange, and Stefan Decker. <a href="https://wikidataworkshop.github.io/2022/papers/Wikidata_Workshop_2022_paper_4558.pdf">Getting and hosting your own copy of Wikidata</a>. 2022.</li>
+</ul>
+<div class="right-comment" id="orga07cfcc">
+<p>
+Fahl et al's paper constitutes our best entrypoint in terms of
+state-of-the-art.
+</p>
+
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="text-center">
+  Ⓒ 2017–2025
+  <a href="https://sites.google.com/site/gddlina/">GDD Team</a>,
+  <a href="https://www.ls2n.fr?lang=en">LS2N</a>,
+  <a href="http://www.univ-nantes.fr/">University of Nantes</a>
+</p>
+</div>
+</body>
+</html>

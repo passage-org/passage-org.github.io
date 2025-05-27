@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2025-05-27 Tue 08:50 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Passage's Homepage</title>
+<meta name="author" content="chat-wane" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="/css/font.css" />
+<link rel="stylesheet" type="text/css" href="/css/root.css" />
+<link rel="stylesheet" type="text/css" href="/css/homepage.css" />
+<link rel="stylesheet" type="text/css" href="/css/code.css" />
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="header-bar">
+  <ul class='navigation-bar'>
+    <li><a class="logo" href="/"><img src="/res/passage.svg" title="passage" width="40px"/></a></li>
+    <li><a class="header_button underlined" href="https://passage-org.github.io/passage-comunica/" title="try passage x comunica">Try it!</a></li>
+
+    <li style="float:right">
+      <span class="github">
+        <a href="https://github.com/passage-org" title="GitHub of passage-org">
+          <!-- comes from : https://github.com/logos -->
+          <svg class="logo_github" viewBox="0 0 98 96" width="30" height="30" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/></svg>
+        </a>
+      </span>
+    </li>
+    
+    <li style="float:right">
+      <input id="dark-light-toggle" name="dark-light-toggle" style="display:none" type="checkbox" />
+      <a href="#" onclick="document.getElementById('dark-light-toggle').checked = !document.getElementById('dark-light-toggle').checked" class="about" title="Toggle dark/light mode">
+        <!-- comes from https://www.svgrepo.com/svg/362877/moon-bold licensed MIT, from phosphor-->
+        <svg class="logo_about" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+          <g><path d="M228.13086,149.11719A12.00407,12.00407,0,0,0,213.168,141.165,80.03157,80.03157,0,0,1,114.85742,42.75,12.00191,12.00191,0,0,0,99.939,27.833,104.01378,104.01378,0,1,0,228.18555,155.99512,12.00185,12.00185,0,0,0,228.13086,149.11719ZM128,208A80.01075,80.01075,0,0,1,88.14551,58.61719a103.98165,103.98165,0,0,0,109.2373,109.2373A80.31015,80.31015,0,0,1,128,208Z"></path></g>
+        </svg>
+      </a>
+    </li>
+    
+  </ul>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">Passage's Homepage</h1>
+<div class='table-logo-container'>
+<table class='table-logo'>
+<tbody>
+<tr>
+<td rowspan='3' class='background-lettrine'>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 226.77 269.29">
+  <g id="leaves_bottom">
+    <path id="leaf1" class="st0" d="M175.31,269.39c-.53.35-2.75.3-2.51-.29,0,0,6.24-14.69,6.24-14.69,3.92-12.4,10.52-19.47,17.86-31.25,4.44-7.65,7.52-14.84,9.68-20.96.11-.32.54-.36.72-.07l4.63,7.52c1.79-2.08,3.83-7.28,3.96-9.89-3.72-1.25-7.51-10.32-1.05-13.19,2.47-.95,1.71-.17,3.89-1.43,5.13-3.27,5.48-10.34.2-11.31,6.88-4.45,8.74,2.79,7.42,10.85-3.67,7.06-8.91,16.74-9.33,25.43,8.59-.21,11.83,8.33,8.41,17.3-5.31-5.7-10.23.44-17.37-3.72-5.75-1.31-16.31,7.62-12.07,11.27,1.4,1.02,3.58-.21,6.4-1.19,7.32-2.09,11.82-2.27,19.98-1.25-2.05.38-8.65,3.78-10.27,6.02-.21,2.56,2.34,6,4.55,5.14,2.01-.78,7.11,1.19,10.14,9.89-1.68,5.95-.08,13.62,0,15.45,0,.21-.19.38-.4.35-9.6-1.45-9.27-9.15-23.94-7.52-.75,2.89.52,7.02,2.04,6.23-7.32,3.78-8.5-2.17-14.9-4.39-5.44-2.28-10.26,1.96-14.28,5.68Z"/>
+    <path id="leaf2" class="st0" d="M190.72,214c-14.91,25.56-39.5,1.61-54.59,34.62,2.82,1.18,4.49-.93,5.93-2.08,2.43,7.35-8.95,10.19-4.35,18.2,29.91-17.36,10.33-2.21,20.37,3.26,7.88-5.33,1.09-11.4,14.34-15.03-3.75-4.94-.83-21.69,5.24-22.55,1.15.36.26,3.32,1.58,3.96,3.21,1.81,14.88-11.41,11.47-20.37Z"/>
+    <path id="leaf3" class="st0" d="M133.54,245.48c-1.75-.27-5.29-.57-9.38.86-3.76,1.31-6.22,3.45-7.45,4.68-1.57,4.14-5.23,6.79-8.97,6.66-3.08-.11-5.17-2.07-5.8-2.7-1.96-3.84-5.54-6-8.77-5.47-1.75.29-3.02,1.3-3.76,2.04.65.03,1.62.16,2.64.66,3.05,1.51,5.44,5.43,6.59,7.85,1.2,2.52,2.88,4.5,9.05,6.99,1.39.56,4.64,1.51,6.63,1.86,3.66.65,4.81.34,6.98-.03.6-.71,1.39-1.45,3.19-2.23,2.69-1.17,5.14-.79,6.07-.59.37-1.82.66-4.29.4-7.19-.16-1.75-.49-3.28-.86-4.55.83-.72,2.94-2.76,3.45-6,.17-1.09.12-2.06,0-2.84Z"/>
+    <path id="leaf4" class="st0" d="M117.3,239.75c-39.58-7.45-24.33-20.4-37.32-20.24,1.22,3.91,2.89,5.43,5.21,9.49,2.35,4.55,1.99,6.93,3.76,9.49,3.02,4.85,15.16,7.42,21.89,2.9.91.6,5.33.04,6.46-1.65Z"/>
+  </g>
+  <g id="leaves_top">
+    <path class="st0" d="M171.37,0h55.41c-6.62,2.64-6.32,5.48,0,8.39-19.17.02,1.97,4.27,0,15.03-4.82-.88-7.41-2.45-4.7,1.85,3.6,8.18,9.53,24.95-2.04,33.49,2.81-12.14-4.95-45.76-23.87-41.08-2.91-10.63-16.76-11.05-24.79-17.69Z"/>
+  </g>
+  <g id="leaves_right">
+    <path id="bot1" class="st0" d="M0,262.76c13.7-10.07,28.72-35.12,20.15-54.69C14.54,196.17-.2,190.92,0,208.13c7.08-5.31,5.98-3.33,3.27,5.84,4.72-4.37,5.38,2.62,4.05,10.12,10.7-5.68,4.27,15.61,1.09,17.6,2.85-5.55,1.87-10.55-.5-11.76-2.06-1.06-5.04.82-5.63,1.2-.96,1.79-1.97,3.88-1.52,4.23.61.46,2.97-3.01,4.68-2.46,2,.64,3,6.7.47,11.03-1.76,3.01-4.69,4.26-5.91,4.7v14.14Z"/>
+    <path id="bot2" class="st0" d="M21.56,203.41c-.12.96,2.66,2.2,3.14,1.36,7.78-13.63,5.65-37.31,5.45-41.81-.25-5.66-3.77-11.81-9.84-15.26-7.2-4.09-18.06-2.93-19.9,1.02C-.04,149.68,0,150.87,0,150.87c0,0,5.06-.45,5.55.16.54.66-3.32,3.52-4.85,7.66-1.39,3.77-.48,7.63.59,10.43,2.24-3.2,3.05-3.71,3.36-3.56.79.39-1.6,5.03-1.34,11.42.11,2.58.62,4.69,1.04,6.08,1.7-3.29,3.41-5.97,4.4-5.69,1.61.46,1.28,8.37,2.92,8.88l4.41-11.87s1.91-4.98,3.31-4.98c1.39,0,2.74,5.33,3.16,9.68,1.23,12.53-.33,18.83-1.01,24.3Z"/>
+    <path id="bot3" class="st0" d="M30.38,147.03c.52-7.46.62-27.91-3.76-29.48-2.31-.83-.18-11.87-7.63-17.27-8.84-7.59-17.77.39-18.98,9.89.62-1,5.55-1.43,6.71,0C-1.54,114.56-.31,127.01.8,133.91c5.51-6.68,7.19-7.65,7.71-7.32.6.97-1.46,6.93,2.67,8.01,2.96-15.33,18.38.81,15.77,9.59,1.05.48,2.37,2.36,3.43,2.84Z"/>
+    <path id="bot4" class="st0" d="M29.47,109.9c1.73-.63.41-31.43.41-31.43.03-4.67.9-34.82-17.88-30.49-2.11-1.2-9.19-2.79-12,1.21,3.31-1.62,7.59,2.58,2,5.41C0,55.62-.37,62.55.22,63.57c11.33-8.86.76-.3,1.57,5.89-.13,5.09,1.19,10.29,1.19,10.29,0,0,3.41-14.56,6.73-7.81-1.82,1.45-4.67,14.24-.36,16.3-.92-6.44,3.54-12.53,9.13-10.68,6.69,4.39,4.22,10.18,5.62,16.7,3,1.73,1.65,12.31,5.38,15.64Z"/>
+    <path id="bot5" class="st0" d="M26.08,43.78c-2.24-13.39-6.74-21.38-16.58-27.24-4.16-2.61-7.96-4.39-9.5.8,1.64-1.17,4.18,1.96,4.62,3.68-1.78-.18-5.27,4.77-4.62,7.87,2.92.23,5.34.79,7.83.03-3.39,2.75-9.19,6.18-7.22,11.8,1.8-2.15,8.38-3.91,11.13-2.96,1.84-1.35,6.86.74,6.59,4.09.6,1.01,6.45,2.56,7.75,1.92Z"/>
+  </g>
+  <g id="oiseau">
+    <path class="st0" d="M184.68,114.14c-4.36,1.23-6.34,1.32-9.49.3.03-13.85.28-27.72-.79-41.54-1.41-3.17-1.86-4.81-5.83-3.36-.13,12.07-.41,24.15-1.29,36.2-.37,1.11-3.02,1.44-3.59.4-12.18-13.59-38.99-24.35-59.1-8.11-13.51-15.18-29.59,20.57-9.71,28.48.15,3.21-1.16,10.11,1.78,11.66,2.3-2.69,2.23-9.77,2.77-11.27,8.28-3.63,7.59-13.05,7.02-19.09,2.54-1.72,6.15,2.06,6.13,2.67,2.09-.49,11.1,1.38,12.71,2.41,2.51,8.8,7.9,6.37,10.83,15.38-5.28-1.98-13.26,6.04-18.94,5.13-7.88-4.59-7.62-10.11-7.86-19.06-10.68,41.41,47.82,48.54,62.9,8.01,7.31.15,18.42-2.85,20.08-10.88-2.97,1.25-5.58,2.09-7.62,2.67ZM94.67,120.31c-3.14.05-3.14-4.89,0-4.85,3.14-.05,3.14,4.89,0,4.85Z"/>
+    <path id="branche" class="st0" d="M104.59,189.97c4.5-6.39,10.03-13.41,16.8-20.57,5.05-5.35,14.83-12.02,19.53-16.01-1.96-.6-10.13.69-14.26,1.24-2.65.36-4.79,1.14-6.3,1.85-1.02-1.78-2.04-3.57-3.06-5.35-4.89,3.46-10.36,7.82-15.96,13.26-5.99,5.82-10.77,11.54-14.51,16.62,1.05,1.54,3.36,4.47,7.38,6.59,4.41,2.33,8.49,2.44,10.37,2.37Z"/>
+  </g>
+  <g id="P">
+    <path class="st0" d="M36.42,63.18v121.58c-.11,13.23,1.17,40.02-17.93,65.93-6,8.13-12.6,14.18-18.48,18.6h102.35c-5.82-4.2-12.4-10.77-18.46-18.6-18.65-24.09-17.78-55.02-17.54-65.93,5.01,6.27,13.87,22.54,31.52,30.33,15.55,6.87,29.51,7.65,37.32,7.52,12.96.19,29.29-1.96,44.97-10.95,36.82-21.1,51.04-73.83,45.58-115.54-.97-7.4-7.52-67.59-57.26-88.91-25.9-11.1-57.39-8.22-72.69-.89-12.35,5.91-20.05,14.04-20.05,14.04-4.44,4.73-7.43,9.32-9.37,12.76V0c-.43,1.7-2.13,7.62-7.25,10.17-6.74,3.35-17.26-.22-23.21-10.17H0c4.27,1.94,12.28,7.26,17.57,12.26,17.31,16.35,18.7,43.02,18.84,50.92ZM164.07,199c-37.74,20.69-87.4-3.53-97.72-36.13V63.18c0-6.07,21.21-52.84,58.15-52.83,30.86,0,64.04,21.36,72.29,51.41,8.46,42.53,5.76,116.15-32.72,137.25Z"/>
+  </g>
+</svg>
+</td>
+<td class='background-pas'><span>AS</span></td>
+</tr>
+<tr><td class='background-sage'><span>SAGE</span></td></tr>
+<tr><td class='background-underline'>&#10086;</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>
+Passage [<a href="#citeproc_bib_item_1">1</a>] constitutes an effort towards
+the adoption of SPARQL query engines that provide <b>complete and
+correct</b> results! <span class="underline">despite their timeout</span> threshold on query execution
+time that enforce fair use policies…
+</p>
+
+<div id="outline-container-org06cbcb8" class="outline-2">
+<h2 id="org06cbcb8">News</h2>
+<div class="outline-text-2" id="text-org06cbcb8">
+</div>
+<div id="outline-container-orgfc20107" class="outline-3">
+<h3 id="orgfc20107">Scientific paper available.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="release">release</span></span></h3>
+<div class="outline-text-3" id="text-orgfc20107">
+<p>
+<i>All you want to know about SPARQL continuations queries is available
+in the <a href="https://hal.science/hal-05055927v1/file/rfp2567.pdf">paper</a>.</i> <span class="timestamp-wrapper"><span class="timestamp">&lt;2025-05-26 Mon&gt;</span></span>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgacdd5ff" class="outline-3">
+<h3 id="orgacdd5ff">More performance, more stability, more everything!&#xa0;&#xa0;&#xa0;<span class="tag"><span class="WIP">WIP</span>&#xa0;<span class="release">release</span>&#xa0;<span class="announce">announce</span></span></h3>
+<div class="outline-text-3" id="text-orgacdd5ff">
+<p>
+<i>Parallelism, better Blazegraph, better configuration.</i> <span class="timestamp-wrapper"><span class="timestamp">&lt;2025-05-26 Mon&gt;</span></span>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2b448cf" class="outline-3">
+<h3 id="org2b448cf">A live Wikidata!&#xa0;&#xa0;&#xa0;<span class="tag"><span class="WIP">WIP</span>&#xa0;<span class="to_be_released">to_be_released</span>&#xa0;<span class="announce">announce</span></span></h3>
+<div class="outline-text-3" id="text-org2b448cf">
+<p>
+<i>One major public SPARQL endpoint is Wikidata. <a href="blog/2025-02-11-live_wikidata.html">We built our own</a>, and
+ours provides complete and correct results, for everyone!</i> <span class="timestamp-wrapper"><span class="timestamp">&lt;2025-02-11 Tue&gt;</span></span>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgea1c52e" class="outline-3">
+<h3 id="orgea1c52e">Our first release!&#xa0;&#xa0;&#xa0;<span class="tag"><span class="release">release</span></span></h3>
+<div class="outline-text-3" id="text-orgea1c52e">
+<p>
+<i>The very first public release of our engine Passage! It mostly
+revolves around (i) <a href="doc/passage-backends.html">available backends</a>, (ii) a <a href="doc/passage-engine.html">SPARQL engine</a>, and (iii)
+optionally <a href="doc/passage-clients.html">smart clients</a>.</i> <span class="timestamp-wrapper"><span class="timestamp">&lt;2025-02-18 Tue&gt;</span></span>
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org12fba09" class="outline-2">
+<h2 id="org12fba09">Contribute</h2>
+<div class="outline-text-2" id="text-org12fba09">
+<p>
+The code base is available on the <a href="https://github.com/orgs/passage-org/repositories"><i class="fab fa-github" aria-hidden="true"></i> GitHub platform</a>. Feel
+free to post issues, or to ask questions there. Among others, the
+possible contributions that would be greatly appreciated are:
+<a href="doc/passage-backends.html#contributing">additional support for backends</a>; <a href="doc/passage-engine.html#contributing">additional support for SPARQL
+operators</a>; and <a href="doc/passage-clients.html#contributing">additional support for Smart Clients</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8f49e91" class="outline-2">
+<h2 id="org8f49e91">References</h2>
+<div class="outline-text-2" id="text-org8f49e91">
+<style>.csl-left-margin{float: left; padding-right: 0em;}
+ .csl-right-inline{margin: 0 0 0 1em;}</style><div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>
+    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Pham THT, Montoya G, Nédelec B, Skaf-Molli H, Molli P (2025) <a href="https://doi.org/10.1145/3696410.3714757">Passage: Ensuring completeness and responsiveness of public sparql endpoints with sparql continuation queries</a></div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="text-center">
+  Ⓒ 2017–2025
+  <a href="https://sites.google.com/site/gddlina/">GDD Team</a>,
+  <a href="https://www.ls2n.fr?lang=en">LS2N</a>,
+  <a href="http://www.univ-nantes.fr/">University of Nantes</a>
+</p>
+</div>
+</body>
+</html>
