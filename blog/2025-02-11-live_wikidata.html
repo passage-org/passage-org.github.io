@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2025-05-27 Tue 09:07 -->
+<!-- 2025-05-27 Tue 16:01 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Passage's Homepage</title>
@@ -262,9 +262,9 @@ completion.
 </p>
 
 
-<div id="outline-container-org7c8b20f" class="outline-2">
-<h2 id="org7c8b20f">Downloading</h2>
-<div class="outline-text-2" id="text-org7c8b20f">
+<div id="outline-container-orgd6b39ad" class="outline-2">
+<h2 id="orgd6b39ad">Downloading</h2>
+<div class="outline-text-2" id="text-orgd6b39ad">
 <p>
 The first step to create a live Wikidata SPARQL endpoint is to
 retrieve the data. Since Passage supports Blazegraph, which is
@@ -272,14 +272,14 @@ the engine and data structure that Wikidata relies on, retrieving the
 <code>.jnl</code> file would suffice. However, these files are huge and not
 publicly available, so we download their dump instead:
 </p>
-<div class="right-comment" id="org755f589">
+<div class="right-comment" id="org5479e16">
 <p>
 While creating our first journal file is time consumming, later
 replication will be easier.
 </p>
 
 </div>
-<div class="left-comment" id="org14c806e">
+<div class="left-comment" id="org58ce278">
 <p>
 We use <code>axel</code> to speed up the download, and provide error management.
 </p>
@@ -292,16 +292,16 @@ We use <code>axel</code> to speed up the download, and provide error management.
 </pre>
 </div>
 
-<pre class="example" id="org2e42999">
+<pre class="example" id="orgb5de14c">
 Downloaded 109.696 Gigabyte(s) in 1:57:53 hour(s). (16261.77 KB/s)
 </pre>
 </div>
 </div>
 
 
-<div id="outline-container-org5a4c285" class="outline-2">
-<h2 id="org5a4c285">Ingesting</h2>
-<div class="outline-text-2" id="text-org5a4c285">
+<div id="outline-container-orgcf80115" class="outline-2">
+<h2 id="orgcf80115">Ingesting</h2>
+<div class="outline-text-2" id="text-orgcf80115">
 <p>
 Once the compressed turtle file containing all Wikidata's data is
 downloaded, we must ingest it into our database, which is Blazegraph,
@@ -310,15 +310,15 @@ as we want to remain close to the original endpoints.
 </div>
 
 
-<div id="outline-container-orge5a819f" class="outline-3">
-<h3 id="orge5a819f">Issues</h3>
-<div class="outline-text-3" id="text-orge5a819f">
+<div id="outline-container-org82d6a54" class="outline-3">
+<h3 id="org82d6a54">Issues</h3>
+<div class="outline-text-3" id="text-org82d6a54">
 <p>
 Despite being impressive in many aspects, Blazegraph's official
 support has been abandonned years ago. Wikimedia had to manage their
 own version of Blazegraph.
 </p>
-<div class="right-comment" id="orga67dc35">
+<div class="right-comment" id="org86cab22">
 <p>
 Until the team finds a suitable replacement to Blazegraph, that is.
 </p>
@@ -331,7 +331,7 @@ tools to ingest the data. We favor an approach based on the
 <a href="https://github.com/blazegraph/database/wiki/Bulk_Data_load">CLI</a>. Although it cannot benefit from the ingestion of multiple files
 at a time, it is easily monitorable, and feels more reliable.
 </p>
-<div class="left-comment" id="orgdce7573">
+<div class="left-comment" id="org270ada3">
 <p>
 Only one process has locked read/write access to the <code>.jnl</code> file.
 </p>
@@ -352,14 +352,14 @@ that contains Wikidata's home-made vocabulary.
 </div>
 </div>
 
-<div id="outline-container-orgd0d47f3" class="outline-3">
-<h3 id="orgd0d47f3">Comments</h3>
-<div class="outline-text-3" id="text-orgd0d47f3">
+<div id="outline-container-org3310cdd" class="outline-3">
+<h3 id="org3310cdd">Comments</h3>
+<div class="outline-text-3" id="text-org3310cdd">
 <p>
 Wikimedia recommends to <code>munge.sh</code> the compressed turtle file. From the
 original file, it creates a large number of compressed turtle files:
 </p>
-<div class="right-comment" id="org2652192">
+<div class="right-comment" id="org64d3ea2">
 <p>
 The original file still exists. So if you fall short of 100GB,
 remember to clean it.
@@ -373,7 +373,7 @@ remember to clean it.
 </pre>
 </div>
 
-<pre class="example" id="org4d4ac0b">
+<pre class="example" id="orgb660223">
 …
 04:22:45.108 … - Processed 102100000 entities at (2899, 2652, 2354)
 04:22:45.108 … - Switching to /DATA/datasets/wikidata-munged//wikidump-000002043.ttl.gz
@@ -396,9 +396,9 @@ resumed easily, if needed.
 </div>
 </div>
 
-<div id="outline-container-orgf8c1948" class="outline-3">
-<h3 id="orgf8c1948">Timelapse</h3>
-<div class="outline-text-3" id="text-orgf8c1948">
+<div id="outline-container-org21a9c93" class="outline-3">
+<h3 id="org21a9c93">Timelapse</h3>
+<div class="outline-text-3" id="text-org21a9c93">
 <p>
 Finally, we can start the sequential ingestion of the 100GB of
 downloaded data. The following scripts run the ingester for each file
@@ -423,7 +423,7 @@ require more than 10GB.
 </pre>
 </div>
 
-<pre class="example" id="orgf83296c">
+<pre class="example" id="org1b2e6d9">
 …
 Will load from: /DATA/datasets/wikidata-munged/wikidump-000000589.ttl.gz
 Journal file: wikidata.jnl
@@ -465,9 +465,9 @@ hopefully get better multithreading capabilities, we load folders of
 </div>
 </div>
 
-<div id="outline-container-orged2c0c9" class="outline-2">
-<h2 id="orged2c0c9">Running</h2>
-<div class="outline-text-2" id="text-orged2c0c9">
+<div id="outline-container-org317ffc6" class="outline-2">
+<h2 id="org317ffc6">Running</h2>
+<div class="outline-text-2" id="text-org317ffc6">
 <p>
 Once the Blazegraph journal exists, we must start the Passage
 service that will accept SPARQL queries, execute them on the journal,
@@ -482,7 +482,7 @@ where a <a href="https://nginx.org/en/">nginx</a> redirects the request to our v
 database:
 </p>
 
-<pre class="example" id="orgd030f65">
+<pre class="example" id="org0fbbf64">
                ┌ @https://10-54-2-226.gcp.glicid.fr/
 user 1 &lt;-----&gt; │                  ┌ @http://localhost:8080/
 user 2 &lt;-----&gt; │ ha-proxy &lt;-----&gt; │ passage-server &lt;-&gt; wikidata.jnl
@@ -505,17 +505,17 @@ user 3 &lt;-----&gt; │
 </div>
 </div>
 
-<div id="outline-container-orgb89affa" class="outline-4">
-<h4 id="orgb89affa"><span class="todo TODO">TODO</span> Deploy ha-proxy in front of Passage.</h4>
+<div id="outline-container-org0e315ca" class="outline-4">
+<h4 id="org0e315ca"><span class="todo TODO">TODO</span> Deploy ha-proxy in front of Passage.</h4>
 </div>
-<div id="outline-container-orgb20f110" class="outline-4">
-<h4 id="orgb20f110"><span class="todo TODO">TODO</span> Automatic restart when the service is down.</h4>
+<div id="outline-container-org504daf9" class="outline-4">
+<h4 id="org504daf9"><span class="todo TODO">TODO</span> Automatic restart when the service is down.</h4>
 </div>
 </div>
 
-<div id="outline-container-org23e942f" class="outline-2">
-<h2 id="org23e942f">Updating</h2>
-<div class="outline-text-2" id="text-org23e942f">
+<div id="outline-container-org898d8c7" class="outline-2">
+<h2 id="org898d8c7">Updating</h2>
+<div class="outline-text-2" id="text-org898d8c7">
 <p>
 Wikidata's data is constantly evolving. Anyone can add new statements
 to the knowledge graph. Therefore, ingesting a dump is not enough for
@@ -531,14 +531,14 @@ source.
 </p>
 </div>
 
-<div id="outline-container-orgd953fd6" class="outline-4">
-<h4 id="orgd953fd6"><span class="todo TODO">TODO</span> Make the endpoint accept updates.</h4>
+<div id="outline-container-org8fb01ca" class="outline-4">
+<h4 id="org8fb01ca"><span class="todo TODO">TODO</span> Make the endpoint accept updates.</h4>
 </div>
 </div>
 
-<div id="outline-container-org30b28ff" class="outline-2">
-<h2 id="org30b28ff">References</h2>
-<div class="outline-text-2" id="text-org30b28ff">
+<div id="outline-container-org693a8ce" class="outline-2">
+<h2 id="org693a8ce">References</h2>
+<div class="outline-text-2" id="text-org693a8ce">
 <ul class="org-ul">
 <li><a href="https://addshore.com/2019/10/your-own-wikidata-query-service-with-no-limits/">https://addshore.com/2019/10/your-own-wikidata-query-service-with-no-limits/</a></li>
 <li><a href="https://www.mediawiki.org/wiki/Wikidata_Query_Service/Implementation/Standalone">https://www.mediawiki.org/wiki/Wikidata_Query_Service/Implementation/Standalone</a></li>
@@ -553,7 +553,7 @@ source.
 
 <li>Wolfgang Fahl, Tim Holzheim, Andrea Westerinen, Christoph Lange, and Stefan Decker. <a href="https://wikidataworkshop.github.io/2022/papers/Wikidata_Workshop_2022_paper_4558.pdf">Getting and hosting your own copy of Wikidata</a>. 2022.</li>
 </ul>
-<div class="right-comment" id="orge187cc0">
+<div class="right-comment" id="org0c3541e">
 <p>
 Fahl et al's paper constitutes our best entrypoint in terms of
 state-of-the-art.

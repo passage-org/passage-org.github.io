@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2025-05-27 Tue 09:07 -->
+<!-- 2025-05-27 Tue 16:01 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Passage's Homepage</title>
@@ -238,7 +238,7 @@ to the Passage server to get the missing results (possibly
 multiple times when continuation queries time out as well).
 </p>
 
-<pre class="example" id="org653e012">
+<pre class="example" id="orgb931fe7">
   end-user                                          passage-server
      ┃                                                     ┃
      ┃ ── curl SPARQL query ─────────────────────────────&gt; ┃
@@ -257,7 +257,7 @@ To ease this tedious process, we rely on smart clients to implement
 the loop until completion:
 </p>
 
-<pre class="example" id="org0968445">
+<pre class="example" id="org0c2c110">
   end-user  smart-client                            passage-server
      ┃           ┃                                         ┃
      ┃ ───────── ┃ ── SPARQL query ──────────────────────&gt; ┃
@@ -278,7 +278,7 @@ operator is not (<i>yet</i>) supported by Passage, the smart client
 handles the operator itself. Together, they provide complete and
 correct results for SPARQL.
 </p>
-<div class="right-comment" id="org658dee0">
+<div class="right-comment" id="org60dbc90">
 <p>
 We still want to push as many operators as possible to the server. It
 improves on query execution times, reduces generated traffic, etc.
@@ -297,9 +297,9 @@ improves on query execution times, reduces generated traffic, etc.
 </table>
 </div>
 
-<div id="outline-container-orga880212" class="outline-2">
-<h2 id="orga880212">Comunica</h2>
-<div class="outline-text-2" id="text-orga880212">
+<div id="outline-container-orgb565e47" class="outline-2">
+<h2 id="orgb565e47">Comunica</h2>
+<div class="outline-text-2" id="text-orgb565e47">
 <p>
 For our first release, we took advantage of the smart client <a href="https://comunica.dev/">Comunica
 <code>v4.0.x</code></a> [<a href="#citeproc_bib_item_1">1</a>].  Comunica is a SPARQL
@@ -317,9 +317,9 @@ handled by Passage, and operators handled by Comunica.
 </p>
 </div>
 
-<div id="outline-container-org9e18a27" class="outline-3">
-<h3 id="org9e18a27">Quickstart</h3>
-<div class="outline-text-3" id="text-org9e18a27">
+<div id="outline-container-orgfe1e2f4" class="outline-3">
+<h3 id="orgfe1e2f4">Quickstart</h3>
+<div class="outline-text-3" id="text-orgfe1e2f4">
 <div class="org-src-container">
 <pre class="src src-shell"><span class="org-comment-delimiter"># </span><span class="org-comment">Retrieve the sources</span>
 git clone git@github.com:passage-org/passage-comunica.git
@@ -350,9 +350,9 @@ on the standard error output stream, while the results are printed in
 <div class="outline-text-2" id="text-contributing">
 </div>
 
-<div id="outline-container-orgbb64ba0" class="outline-4">
-<h4 id="orgbb64ba0">Keep the smart client up-to-date with Comunica.</h4>
-<div class="outline-text-4" id="text-orgbb64ba0">
+<div id="outline-container-orgf37772e" class="outline-4">
+<h4 id="orgf37772e">Keep the smart client up-to-date with Comunica.</h4>
+<div class="outline-text-4" id="text-orgf37772e">
 <p>
 <i>For instance, the current implementation sets the subset of
   operations handled by Passage. Instead, the server should
@@ -361,9 +361,9 @@ on the standard error output stream, while the results are printed in
 </div>
 </div>
 
-<div id="outline-container-orgc705d20" class="outline-4">
-<h4 id="orgc705d20">Implement the same logic in other smart clients.</h4>
-<div class="outline-text-4" id="text-orgc705d20">
+<div id="outline-container-org9ca0245" class="outline-4">
+<h4 id="org9ca0245">Implement the same logic in other smart clients.</h4>
+<div class="outline-text-4" id="text-org9ca0245">
 <p>
 <i>While Comunica provides a convenient browser experience, it lacks
   some multithreading capabilities. Other engines such as <a href="https://github.com/LiUSemWeb/HeFQUIN">HeFQUIN</a>
@@ -373,9 +373,9 @@ on the standard error output stream, while the results are printed in
 </div>
 </div>
 
-<div id="outline-container-org708277e" class="outline-2">
-<h2 id="org708277e">References</h2>
-<div class="outline-text-2" id="text-org708277e">
+<div id="outline-container-orgd9c84be" class="outline-2">
+<h2 id="orgd9c84be">References</h2>
+<div class="outline-text-2" id="text-orgd9c84be">
 <style>.csl-left-margin{float: left; padding-right: 0em;}
  .csl-right-inline{margin: 0 0 0 1em;}</style><div class="csl-bib-body">
   <div class="csl-entry"><a id="citeproc_bib_item_1"></a>
