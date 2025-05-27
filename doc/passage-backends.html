@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2025-05-27 Tue 08:50 -->
+<!-- 2025-05-27 Tue 09:07 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Passage's Homepage</title>
@@ -241,9 +241,9 @@ The same Passage Java engine supports any backend, granted the
 latter implements our provided interfaces.
 </p>
 
-<div id="outline-container-orgb0f709a" class="outline-2">
-<h2 id="orgb0f709a">Blazegraph</h2>
-<div class="outline-text-2" id="text-orgb0f709a">
+<div id="outline-container-orgc93cf3b" class="outline-2">
+<h2 id="orgc93cf3b">Blazegraph</h2>
+<div class="outline-text-2" id="text-orgc93cf3b">
 <p>
 With our first release, we focused on <a href="https://blazegraph.com/">Blazegraph</a>
 [<a href="#citeproc_bib_item_2">2</a>]. Despite its terminated support, it presents a
@@ -257,7 +257,7 @@ is associated with each tree node that allows Passage to
 efficiently skip large parts of triple/quad patterns. Simple SPARQL
 queries like the following are efficiently computed:
 </p>
-<div class="right-comment" id="org3a0043a">
+<div class="right-comment" id="org0800db9">
 <p>
 The time complexity to create range query iterators is logarithmic
 compared to the number of elements matching the pattern.
@@ -272,7 +272,7 @@ compared to the number of elements matching the pattern.
 } <span class="org-keyword">OFFSET</span> 10000000        <span class="org-comment"># May need to skip a lot of elements</span>
 </pre>
 </div>
-<div class="left-comment" id="org40bdd21">
+<div class="left-comment" id="org5ca20a0">
 <p>
 Which is equivalent to a single triple pattern whose predicate
 is bounded: <code>?s rdf:type ?o</code>. This example shows that simple <code>BIND</code>
@@ -299,9 +299,9 @@ the support for databases such as <a href="https://jena.apache.org/">Apache Jena
 </p>
 </div>
 
-<div id="outline-container-org03d8f1a" class="outline-4">
-<h4 id="org03d8f1a">Adding Support</h4>
-<div class="outline-text-4" id="text-org03d8f1a">
+<div id="outline-container-org283e796" class="outline-4">
+<h4 id="org283e796">Adding Support</h4>
+<div class="outline-text-4" id="text-org283e796">
 <p>
 Our aim is to support many databases with minimal effort, without
 modifying the data. To that end, one must implement the interface
@@ -328,7 +328,7 @@ efficiently compute the simple <code>OFFSET</code> subqueries:
 <pre class="src src-java"><span class="org-type">void</span> <span class="org-function-name">skip</span>(<span class="org-keyword">final</span> <span class="org-type">SKIP</span> <span class="org-variable-name">to</span>);
 </pre>
 </div>
-<div class="right-comment" id="orge990466">
+<div class="right-comment" id="orgfae5d30">
 <p>
 Although highly recommended, implementing a logarithmic <code>skip</code> is not
 mandatory if the call to <code>skip</code> is fast enough: One should only make
@@ -343,9 +343,9 @@ sure that the query as enough time to progress over pause/resume cycles.
 </div>
 </div>
 
-<div id="outline-container-org0c077a4" class="outline-4">
-<h4 id="org0c077a4">Testing</h4>
-<div class="outline-text-4" id="text-org0c077a4">
+<div id="outline-container-org9ac9591" class="outline-4">
+<h4 id="org9ac9591">Testing</h4>
+<div class="outline-text-4" id="text-org9ac9591">
 <p>
 As per usual, the code should be tested. The requirements are not huge
 though. We mostly need backends to output values that they will be
@@ -355,9 +355,9 @@ able to use as input later on.
 </div>
 </div>
 
-<div id="outline-container-org8d2c71a" class="outline-2">
-<h2 id="org8d2c71a">References</h2>
-<div class="outline-text-2" id="text-org8d2c71a">
+<div id="outline-container-org3555640" class="outline-2">
+<h2 id="org3555640">References</h2>
+<div class="outline-text-2" id="text-org3555640">
 <style>.csl-left-margin{float: left; padding-right: 0em;}
  .csl-right-inline{margin: 0 0 0 1em;}</style><div class="csl-bib-body">
   <div class="csl-entry"><a id="citeproc_bib_item_1"></a>
