@@ -105,13 +105,19 @@ time that enforce fair use policies…
 
 * News
 
-** Scientific paper available.                                      :release:
+
+** Demo paper accepted at ISWC'2025.                                :release:
+/Dread not the timeouts, for they are you friends now! The [[https://hal.science/hal-05251900v1/document][paper]]
+describes continuation queries, insights they provide, and how to go
+beyond core SPARQL./ <2025-09-22 Lun>
+
+** Research paper accepted at WWW'2024.                             :release:
 /All you want to know about SPARQL continuations queries is available
 in the [[https://hal.science/hal-05055927v1/file/rfp2567.pdf][paper]]./ <2025-05-26 Lun>
 
 
 ** More performance, more stability, more everything!  :WIP:release:announce:
-/Parallelism, better Blazegraph, better configuration./ <2025-05-26 Lun>
+/Parallelism, better Blazegraph, better configuration…/ <2025-05-26 Lun>
 
 ** A live Wikidata!                                      :WIP:to_be_released:announce:
 /One major public SPARQL endpoint is Wikidata. [[file:blog/2025-02-11-live_wikidata.org][We built our own]], and
